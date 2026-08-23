@@ -731,7 +731,7 @@ function heroSlides(){
   const setTag=k=>{ tag.textContent=imgs[k].name+(imgs[k].country?' · '+imgs[k].country:''); };
   setTag(0);
   let i=0; if(window._heroT) clearInterval(window._heroT);
-  if(imgs.length>1) window._heroT=setInterval(()=>{ sl[i].classList.remove('on'); ds[i].classList.remove('on'); i=(i+1)%sl.length; sl[i].classList.add('on'); ds[i].classList.add('on'); setTag(i); },4200);
+  if(imgs.length>1) window._heroT=setInterval(()=>{ sl[i].classList.remove('on'); ds[i].classList.remove('on'); i=(i+1)%sl.length; sl[i].classList.add('on'); ds[i].classList.add('on'); tag.style.opacity=0; setTimeout(()=>{setTag(i); tag.style.opacity=1;},800); },4200);
 }
 
 /* ==================== INICIO ==================== */
