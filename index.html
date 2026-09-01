@@ -323,7 +323,7 @@ textarea{resize:vertical;min-height:66px}
         <button type="button" data-t="actividad">Actividad</button>
         <button type="button" data-t="nota">Nota</button>
       </div>
-      <div><label>Fecha</label><input type="date" id="iDate" min="2026-09-12" max="2026-10-03" required></div>
+      <div><label>Fecha</label><input type="date" id="iDate" min="2026-09-12" max="2026-10-04" required></div>
 
       <div id="gCiudad">
         <div><label>Ciudad donde amanecés</label><input id="iCity" placeholder="Roma" list="cityList"></div>
@@ -371,7 +371,7 @@ textarea{resize:vertical;min-height:66px}
 const KEY='europa2026-v5';
 const GRID_START='2026-09-07', GRID_END='2026-10-04';
 const TRIP_START='2026-09-14', TRIP_END='2026-10-02';
-const ACTIVE_START='2026-09-12', ACTIVE_END='2026-10-03';
+const ACTIVE_START='2026-09-12', ACTIVE_END='2026-10-04';
 const TOTAL_DAYS=19;
 const MODEN={avion:'Avión',tren:'Tren',bus:'Bus',ferry:'Ferry',auto:'Auto',pie:'Taxi o a pie'};
 const WD=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
@@ -417,11 +417,13 @@ function photos(name){
 }
 
 const FLIGHTS=[
- {id:'f1',locked:true,date:'2026-09-13',type:'traslado',mode:'avion',from:'Santiago de Chile (SCL)',to:'São Paulo (GRU)',dep:'16:45',dur:'4h 00m',notes:'LA714 · Boeing 787-9 · escala 2h15 en Guarulhos'},
+ {id:'f0',locked:true,date:'2026-09-12',type:'traslado',mode:'avion',from:'Buenos Aires',to:'Santiago de Chile (SCL)',dep:'',dur:'hora a confirmar',notes:'Solo José y Mary. Carge y Matías se suman en Santiago.'},
+ {id:'f1',locked:true,date:'2026-09-13',type:'traslado',mode:'avion',from:'Santiago de Chile (SCL)',to:'São Paulo (GRU)',dep:'16:45',dur:'4h 00m',notes:'LA714 · Boeing 787-9 · escala 2h15 en Guarulhos · los 4 juntos'},
  {id:'f2',locked:true,date:'2026-09-13',type:'traslado',mode:'avion',from:'São Paulo (GRU)',to:'Madrid (MAD)',dep:'23:00',dur:'10h 05m',notes:'LA714 · llega el 14 a las 14:05'},
  {id:'f3',locked:true,date:'2026-09-14',type:'hito',time:'14:05',name:'Llegada a Madrid, 14:05',notes:'Control de frontera EES: 30 a 75 minutos. Día de descanso.'},
  {id:'f4',locked:true,date:'2026-10-03',type:'traslado',mode:'avion',from:'Madrid (MAD)',to:'Santiago de Chile (SCL)',dep:'13:15',dur:'13h 30m',notes:'LA707 · directo · estar en Barajas 10:15'},
- {id:'f5',locked:true,date:'2026-10-03',type:'hito',time:'21:45',name:'Llegada a Santiago, 21:45',notes:'Fin del viaje.'}
+ {id:'f5',locked:true,date:'2026-10-03',type:'hito',time:'21:45',name:'Llegada a Santiago, 21:45',notes:'Fin del viaje europeo. Carge y Matías quedan en Santiago.'},
+ {id:'f6',locked:true,date:'2026-10-04',type:'traslado',mode:'avion',from:'Santiago de Chile (SCL)',to:'Buenos Aires',dep:'',dur:'hora a confirmar',notes:'Solo José y Mary, de regreso a casa.'}
 ];
 
 /* ==================== ESTADO ==================== */
