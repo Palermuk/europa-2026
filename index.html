@@ -84,7 +84,7 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 #map{height:min(56vh,440px);min-height:300px;border:1px solid var(--line);background:var(--card);z-index:0}
 @media (min-width:1100px){ #map{height:520px} }
 .leaflet-container{font-family:inherit;background:var(--card)}
-.leaflet-tile-pane{filter:grayscale(1) contrast(.9) brightness(1.03) sepia(.14);opacity:.92}
+.leaflet-tile-pane{filter:grayscale(1) contrast(.86) brightness(1.06) sepia(.16);opacity:.9}
 .leaflet-control-attribution{font-size:9px;background:rgba(243,241,236,.85);color:var(--note)}
 .leaflet-control-attribution a{color:var(--sec)}
 .leaflet-control-zoom a{color:var(--title);background:var(--surface);border-color:var(--line) !important}
@@ -103,6 +103,9 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .map-legend i{display:inline-block;width:22px;border-top:2px solid var(--k70)}
 .map-legend i.dash{border-top-style:dashed}
 .map-legend i.dot{width:8px;height:8px;border:0;border-radius:50%;background:var(--k100)}
+.map-legend i.poi{width:7px;height:7px;border:0;border-radius:50%;background:#8C6A4E}
+.poi-lbl{background:rgba(248,247,244,.82);border:0;box-shadow:none;color:var(--title);font-family:inherit;font-weight:500;font-size:11px;padding:1px 4px;border-radius:2px}
+.poi-lbl::before{display:none}
 
 /* ---------- AGENDA ---------- */
 .city{margin-top:26px}
@@ -168,12 +171,31 @@ td:hover .add{opacity:1}
 .cellbody .chip{padding:7px 9px;font-size:13px}
 .cellbody .chip .tx span{font-size:11.5px}
 .cellbody .chip .mv{display:none}
-.band{width:100%;display:flex;padding:7px 9px;border-radius:2px;text-align:left;background:var(--line);color:var(--title);font-weight:700;font-size:13px;letter-spacing:-.01em}
-.band.cont{font-weight:500;color:var(--sec);background:var(--card)}
+.band{width:100%;display:flex;padding:7px 9px;border-radius:2px;text-align:left;background:var(--k20);color:var(--title);font-weight:700;font-size:13px;letter-spacing:-.01em}
+.band.cont{font-weight:500;color:var(--sec);background:var(--k10)}
 .band .lodge{display:block;font-weight:500;color:var(--sec);font-size:12px;margin-top:2px}
 [data-kind]{cursor:grab} [data-kind]:active{cursor:grabbing}
 .dragging{opacity:.3}
 td.drop{background:var(--k10)} td.drop .dnum{box-shadow:inset 0 2px 0 var(--k70)}
+
+/* mini calendario en celular */
+.mini{display:none;gap:3px;flex-wrap:wrap;padding:1px 2px 0}
+.mini i{width:5px;height:5px;border-radius:50%;background:var(--k70)}
+.mini i.act{background:var(--faint,#B5AEA1)}
+@media (max-width:1099px){
+  table.cal{min-width:0}
+  table.cal td{height:auto;min-height:74px}
+  .dnum{flex-direction:column;align-items:flex-start;gap:1px;padding:6px 5px 3px}
+  .dnum .d{font-size:14px}
+  .dnum .wd,.dnum .add{display:none}
+  .cellbody{padding:0 3px 7px;gap:3px}
+  .cellbody .chip{display:none}
+  .cellbody .band{padding:3px 4px;font-size:9.5px;letter-spacing:0}
+  .cellbody .band span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;width:100%}
+  .cellbody .band .lodge{display:none}
+  .mini{display:flex}
+  .calwrap{margin-left:-8px;margin-right:-8px}
+}
 
 /* ---------- RESUMEN ---------- */
 .grid2{display:grid;grid-template-columns:1fr;gap:28px}
@@ -197,8 +219,7 @@ nav.tabs .in{max-width:720px;margin:0 auto;display:flex;height:var(--nav-h)}
 nav.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--sec);font-size:11.5px;font-variant-caps:all-small-caps;letter-spacing:.05em;font-weight:500}
 nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs button.on{color:var(--k100);font-weight:700}
-nav.tabs button.cal-tab{display:none}
-@media (min-width:1100px){ nav.tabs button.cal-tab{display:flex} }
+
 
 /* FAB */
 .fab{
@@ -280,6 +301,7 @@ textarea{resize:vertical;min-height:66px}
       <span><i class="dot"></i> Ciudad</span>
       <span><i class="dash"></i> Avión</span>
       <span><i></i> Tren, bus o ferry</span>
+      <span><i class="poi"></i> Lugares turísticos (acercá el zoom)</span>
     </div>
     <h2 class="sec">Resumen</h2>
     <div class="grid2">
@@ -558,13 +580,14 @@ function renderCal(){
     for(let i=0;i<7;i++){
       const date=cur;
       if(!between(date,ACTIVE_START,ACTIVE_END)){ html+='<td class="off"></td>'; cur=addD(cur,1); continue; }
-      let body='';
+      let body='',dots='';
       itemsOn(date).forEach(it=>{
         if(it.type==='ciudad'){
           const prev=cityOn(addD(date,-1)); const cont=prev&&prev.city===it.city;
           body+=`<div class="band ${cont?'cont':''}" data-item="${it.id}" draggable="true" data-kind="item" data-iid="${it.id}"><span>${esc(it.city)}${it.lodge&&!cont?`<span class="lodge">${esc(it.lodge)}</span>`:''}</span></div>`;
-        } else body+=chip(it);
+        } else { body+=chip(it); dots+=`<i class="${it.type==='actividad'?'act':''}"></i>`; }
       });
+      body+=dots?`<div class="mini">${dots}</div>`:'';
       html+=`<td class="${(date===TRIP_START||date===ACTIVE_END)?'key':''}" data-date="${date}">
         <div class="dnum"><span class="d">${s2d(date).getUTCDate()}</span><span class="wd">${wd(date)}</span><button type="button" class="add" data-add="${date}">＋</button></div>
         <div class="cellbody">${body}</div></td>`;
@@ -576,7 +599,18 @@ function renderCal(){
   bind(document.getElementById('calBody'));
 }
 
+function gotoDay(date){
+  const btn=document.querySelector('nav.tabs button[data-view="vAgenda"]');
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.toggle('on',x===btn));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='vAgenda'));
+  const el=document.querySelector(`.day[data-day="${date}"]`);
+  if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
 function bind(root){
+  root.querySelectorAll('td[data-date]').forEach(td=>td.addEventListener('click',e=>{
+    if(window.innerWidth>=1100) return;
+    e.stopPropagation(); e.preventDefault(); gotoDay(td.dataset.date);
+  },true));
   root.querySelectorAll('[data-add]').forEach(b=>b.onclick=e=>{e.stopPropagation();openItem(null,b.dataset.add);});
   root.querySelectorAll('[data-item]').forEach(b=>b.onclick=e=>{ if(e.target.closest('[data-mv]')) return; e.stopPropagation(); openItem(b.dataset.item); });
   root.querySelectorAll('[data-mv]').forEach(b=>b.onclick=e=>{
@@ -606,16 +640,56 @@ function refreshCityList(){
   dl.innerHTML=Object.values(GEO).map(g=>`<option value="${g.n}">`).join('');
 }
 
+
+/* Lugares turísticos principales, por ciudad */
+const POI={
+ madrid:[['Museo del Prado',40.4138,-3.6921],['Palacio Real',40.4180,-3.7143],['Parque del Retiro',40.4153,-3.6844],
+   ['Plaza Mayor',40.4155,-3.7074],['Templo de Debod',40.4240,-3.7178],['Mercado de San Miguel',40.4153,-3.7090],
+   ['Gran Vía',40.4200,-3.7025],['Reina Sofía · Guernica',40.4080,-3.6945]],
+ toledo:[['Catedral Primada',39.8574,-4.0238],['Alcázar',39.8580,-4.0203],['Santo Tomé · El Greco',39.8570,-4.0290],
+   ['Sinagoga del Tránsito',39.8563,-4.0313],['San Juan de los Reyes',39.8583,-4.0315],['Mirador del Valle',39.8494,-4.0201]],
+ segovia:[['Acueducto romano',40.9481,-4.1177],['Alcázar',40.9526,-4.1320],['Catedral',40.9500,-4.1250],
+   ['Mesón de Cándido',40.9477,-4.1180]],
+ milan:[['Duomo y terrazas',45.4642,9.1900],['Galleria Vittorio Emanuele II',45.4659,9.1900],
+   ['Teatro alla Scala',45.4674,9.1895],['Castello Sforzesco',45.4705,9.1793],['Navigli',45.4510,9.1730],
+   ['Última Cena · S. M. delle Grazie',45.4659,9.1706]],
+ florencia:[['Duomo y cúpula de Brunelleschi',43.7731,11.2560],['Galería Uffizi',43.7678,11.2553],
+   ['Galería de la Academia · David',43.7768,11.2585],['Ponte Vecchio',43.7680,11.2531],
+   ['Piazza della Signoria',43.7696,11.2558],['Piazzale Michelangelo',43.7629,11.2650],
+   ['Santa Croce',43.7686,11.2622],['Mercato Centrale',43.7765,11.2536]],
+ roma:[['Coliseo',41.8902,12.4922],['Foro Romano y Palatino',41.8925,12.4853],['Vaticano · Capilla Sixtina',41.9065,12.4536],
+   ['Basílica de San Pedro',41.9022,12.4539],['Panteón',41.8986,12.4769],['Fontana di Trevi',41.9009,12.4833],
+   ['Piazza Navona',41.8992,12.4731],['Plaza de España',41.9058,12.4823],['Trastevere',41.8890,12.4700],
+   ['Castel Sant\'Angelo',41.9031,12.4663],['Galleria Borghese',41.9142,12.4922]],
+ salerno:[['Duomo de San Mateo',40.6800,14.7614],['Centro storico',40.6790,14.7600],
+   ['Lungomare Trieste',40.6760,14.7550],['Castello di Arechi',40.6875,14.7580],['Giardino della Minerva',40.6800,14.7580]],
+ amalfi:[['Duomo de Sant\'Andrea',40.6340,14.6027],['Puerto y paseo',40.6330,14.6030]],
+ ravello:[['Villa Rufolo',40.6494,14.6120],['Villa Cimbrone · Terraza del Infinito',40.6460,14.6110]],
+ positano:[['Playa y Santa Maria Assunta',40.6281,14.4850]],
+ palermo:[['Capilla Palatina · Palacio Normando',38.1113,13.3533],['Catedral de Palermo',38.1143,13.3562],
+   ['Teatro Massimo',38.1200,13.3570],['Mercado de Ballarò',38.1105,13.3585],['Quattro Canti',38.1157,13.3615],
+   ['Catacumbas de los Capuchinos',38.1113,13.3390],['Mondello',38.2010,13.3240]],
+ monreale:[['Catedral de Monreale',38.0817,13.2920]],
+ cefalu:[['Catedral normanda',38.0392,14.0230],['Playa y casco antiguo',38.0370,14.0210]],
+ agrigento:[['Valle de los Templos',37.2900,13.5900]],
+ segesta:[['Templo dórico de Segesta',37.9414,12.8320]],
+ napoles:[['Museo Archeologico',40.8534,14.2506],['Spaccanapoli',40.8490,14.2570],['Cappella Sansevero · Cristo Velado',40.8494,14.2551],['Castel dell\'Ovo',40.8283,14.2478]],
+ pisa:[['Torre y Piazza dei Miracoli',43.7230,10.3966]],
+ pompeya:[['Parque arqueológico de Pompeya',40.7497,14.4869]]
+};
+
 /* ==================== MAPA ==================== */
-let map=null, layer=null;
+let map=null, layer=null, poiLayer=null;
+const slugGeo=n=>{ const k=slug(n); return POI[k]?k:(Object.keys(GEO).find(x=>GEO[x].n===n&&POI[x])||null); };
 function renderMap(){
   if(typeof L==='undefined') return;
   if(!document.getElementById('vMapa').classList.contains('on')) return;   // solo si la pestaña está visible
   if(!map){
     map=L.map('map',{scrollWheelZoom:false,zoomControl:true,attributionControl:true});
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{maxZoom:18,attribution:'© OpenStreetMap · © CARTO'}).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
   }
   if(layer) layer.remove();
+  if(poiLayer){ poiLayer.remove(); poiLayer=null; }
   layer=L.layerGroup().addTo(map);
   const bl=blocks().filter(b=>b.name&&geo(b.name));
   const pts=[];
@@ -652,8 +726,32 @@ function renderMap(){
       .bindTooltip(g.n,{direction:'right',offset:[6,0]}).bindPopup(`<b>${g.n}</b><br>Excursión del ${fmt(a.date)} desde ${gb.n}`);
     pts.push(g.ll);
   });
+  // lugares turísticos de cada ciudad del viaje (aparecen al acercar el zoom)
+  poiLayer=L.layerGroup();
+  const keys=new Set();
+  Object.values(byName).forEach(({g})=>{ const k=slugGeo(g.n); if(k) keys.add(k); });
+  state.items.filter(i=>i.type==='actividad').forEach(a=>{
+    const k=slug(String(a.name).split(/[,:]/)[0].trim()); if(POI[k]) keys.add(k);
+    ['monreale','cefalu','pisa','pompeya','ravello','amalfi','agrigento','segesta','positano'].forEach(x=>{
+      if(slug(String(a.name)).includes(x)) keys.add(x); });
+  });
+  keys.forEach(k=>(POI[k]||[]).forEach(([n,la,lo])=>{
+    L.circleMarker([la,lo],{radius:3.5,color:'#F3F1EC',weight:1.2,fillColor:'#8C6A4E',fillOpacity:1})
+      .addTo(poiLayer)
+      .bindTooltip(n,{direction:'right',offset:[7,0],className:'poi-lbl'})
+      .bindPopup(`<b>${esc(n)}</b>`);
+  }));
+  const syncPoi=()=>{
+    const z=map.getZoom();
+    if(z>=9){ if(!map.hasLayer(poiLayer)) poiLayer.addTo(map); } else if(map.hasLayer(poiLayer)) poiLayer.remove();
+    const perm=z>=12;
+    poiLayer.eachLayer(l=>{ const t=l.getTooltip(); if(t && t.options.permanent!==perm){ const c=t.getContent(); l.unbindTooltip(); l.bindTooltip(c,{permanent:perm,direction:'right',offset:[7,0],className:'poi-lbl'}); } });
+  };
+  map.off('zoomend',map._syncPoi); map._syncPoi=syncPoi; map.on('zoomend',syncPoi);
+
   map.invalidateSize();
   if(pts.length) map.fitBounds(L.latLngBounds(pts),{padding:[28,28],maxZoom:7}); else map.fitBounds([[36.5,-9.5],[46,18.5]]);
+  syncPoi();
 }
 
 /* ==================== DRAG AND DROP (calendario) ==================== */
