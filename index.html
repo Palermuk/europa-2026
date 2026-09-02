@@ -84,7 +84,7 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 #map{height:min(56vh,440px);min-height:300px;border:1px solid var(--line);background:var(--card);z-index:0}
 @media (min-width:1100px){ #map{height:520px} }
 .leaflet-container{font-family:inherit;background:var(--card)}
-.leaflet-tile-pane{filter:grayscale(1) contrast(.86) brightness(1.06) sepia(.16);opacity:.9}
+.leaflet-tile-pane{filter:grayscale(1) contrast(1.02) brightness(1.04);opacity:.92}
 .leaflet-control-attribution{font-size:9px;background:rgba(243,241,236,.85);color:var(--note)}
 .leaflet-control-attribution a{color:var(--sec)}
 .leaflet-control-zoom a{color:var(--title);background:var(--surface);border-color:var(--line) !important}
@@ -103,8 +103,9 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .map-legend i{display:inline-block;width:22px;border-top:2px solid var(--k70)}
 .map-legend i.dash{border-top-style:dashed}
 .map-legend i.dot{width:8px;height:8px;border:0;border-radius:50%;background:var(--k100)}
-.map-legend i.poi{width:7px;height:7px;border:0;border-radius:50%;background:#8C6A4E}
-.poi-lbl{background:rgba(248,247,244,.82);border:0;box-shadow:none;color:var(--title);font-family:inherit;font-weight:500;font-size:11px;padding:1px 4px;border-radius:2px}
+.map-legend i.poi{width:8px;height:8px;border:0;border-radius:50%;background:#121212}
+.poi-lbl{background:#F8F7F4;border:1px solid var(--line);box-shadow:none;color:var(--title);
+  font-family:inherit;font-weight:700;font-size:11.5px;letter-spacing:-.01em;padding:2px 6px;border-radius:2px;opacity:1}
 .poi-lbl::before{display:none}
 
 /* ---------- AGENDA ---------- */
@@ -736,7 +737,7 @@ function renderMap(){
       if(slug(String(a.name)).includes(x)) keys.add(x); });
   });
   keys.forEach(k=>(POI[k]||[]).forEach(([n,la,lo])=>{
-    L.circleMarker([la,lo],{radius:3.5,color:'#F3F1EC',weight:1.2,fillColor:'#8C6A4E',fillOpacity:1})
+    L.circleMarker([la,lo],{radius:4.5,color:'#F8F7F4',weight:2,fillColor:'#121212',fillOpacity:1})
       .addTo(poiLayer)
       .bindTooltip(n,{direction:'right',offset:[7,0],className:'poi-lbl'})
       .bindPopup(`<b>${esc(n)}</b>`);
