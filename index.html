@@ -23,6 +23,12 @@
   --title:#121212; --text:#3A3A38; --sec:#696966; --note:#A4A29C;
   --k100:#002FA7; --k70:#4969BC; --k40:#92A3D0; --k20:#C2CADE; --k10:#DBDEE5;
   --s100:#A8462F; --s70:#C4715A; --s40:#DFA894; --s20:#EFD3C8; --s10:#F8E9E3;
+  /* ciudad y hospedaje — verde salvia */
+  --g100:#3F6147; --g70:#6B8C71; --g40:#A3BCA6; --g20:#D3E0D4; --g10:#E6EDE5;
+  /* traslado terrestre — violeta */
+  --v100:#584A7E; --v70:#7D719F; --v40:#B0A7C8; --v20:#DCD7E7; --v10:#EBE8F1;
+  /* hitos del viaje — ocre */
+  --o100:#7E621C; --o70:#A98C3E; --o40:#CFB878; --o20:#EBDEB6; --o10:#F4EDDA;
   --ok:#4F6B4A; --warn:#B48A2E; --err:#8C3B2A;
   --nav-h:64px;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
@@ -146,7 +152,8 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip .tx b{display:block;font-weight:700;color:var(--title);letter-spacing:-.01em}
 .chip .tx span{display:block;color:var(--sec);font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;margin-top:3px}
 .chip .tx small{display:block;font-size:13.5px;color:var(--sec);margin-top:5px;line-height:1.4;font-variant-caps:normal;letter-spacing:0}
-.chip.traslado{background:var(--k10);border-color:var(--k40)}
+.chip.traslado{background:var(--v10);border-color:var(--v40)}
+.chip.traslado .tx span{color:var(--v100)}
 .chip.vuelo{background:var(--k10);border-color:var(--k70)}
 .chip.vuelo .tx span{color:var(--k70)}
 .chip.actividad{background:var(--s10);border-color:var(--s40)}
@@ -156,7 +163,8 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
   font-variant-caps:all-small-caps;letter-spacing:.06em;margin-top:5px}
 .cellbody .res{font-size:10.5px;margin-top:3px}
 .chip.nota{background:transparent;border-style:dashed}
-.chip.hito{background:var(--k10);border-color:var(--k70)}
+.chip.hito{background:var(--o10);border-color:var(--o40)}
+.chip.hito .tx b{color:var(--o100)}
 .chip.locked{cursor:default}
 .chip .mv{display:flex;flex-direction:column;gap:2px;flex:0 0 auto;margin:-6px -6px -6px 0}
 .chip .mv button{width:30px;height:24px;color:var(--note);font-size:13px;line-height:1;border-radius:2px}
@@ -221,15 +229,17 @@ td:hover .add{opacity:1}
 .cellbody .chip{padding:7px 9px;font-size:13px}
 .cellbody .chip .tx span{font-size:11.5px}
 .cellbody .chip .mv{display:none}
-.band{width:100%;display:flex;padding:7px 9px;border-radius:2px;text-align:left;background:var(--k20);color:var(--title);font-weight:700;font-size:13px;letter-spacing:-.01em}
-.band.cont{font-weight:500;color:var(--sec);background:var(--k10)}
+.band{width:100%;display:flex;padding:7px 9px;border-radius:2px;text-align:left;background:var(--g20);color:var(--title);font-weight:700;font-size:13px;letter-spacing:-.01em}
+.band.cont{font-weight:500;color:var(--sec);background:var(--g10)}
 .band .lodge{display:block;font-weight:500;color:var(--sec);font-size:12px;margin-top:2px}
 td.drop{background:var(--k10)} td.drop .dnum{box-shadow:inset 0 2px 0 var(--k70)}
 
 /* mini calendario en celular */
 .mini{display:none;gap:3px;flex-wrap:wrap;padding:1px 2px 0}
-.mini i{width:5px;height:5px;border-radius:50%;background:var(--k70)}
+.mini i{width:5px;height:5px;border-radius:50%;background:var(--v70)}
 .mini i.act{background:var(--s70)}
+.mini i.fly{background:var(--k70)}
+.mini i.mile{background:var(--o70)}
 @media (max-width:1099px){
   table.cal{min-width:0}
   table.cal td{height:auto;min-height:74px}
@@ -683,7 +693,9 @@ function renderCal(){
         if(it.type==='ciudad'){
           const prev=cityOn(addD(date,-1)); const cont=prev&&prev.city===it.city;
           body+=`<div class="band ${cont?'cont':''}"><span>${esc(it.city)}${it.lodge&&!cont?`<span class="lodge">${esc(it.lodge)}</span>`:''}</span></div>`;
-        } else { body+=chip(it); dots+=`<i class="${it.type==='actividad'?'act':''}"></i>`; }
+        } else { body+=chip(it);
+          const cl = it.type==='actividad'?'act' : it.type==='hito'?'mile' : (it.type==='traslado'&&it.mode==='avion')?'fly' : '';
+          dots+=`<i class="${cl}"></i>`; }
       });
       body+=dots?`<div class="mini">${dots}</div>`:'';
       html+=`<td class="${(date===TRIP_START||date===ACTIVE_END)?'key':''}" data-date="${date}">
