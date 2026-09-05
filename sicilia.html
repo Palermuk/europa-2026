@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sicilia · el roadtrip</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F1EC;--sea:#CFE0E6;--land:#E4E0D2;--landL:#EFEBDD;--ink:#121212;--sec:#696966;
+ --note:#A4A29C;--line:#D8D4CC;--k:#002FA7;--s:#A8462F;--o:#7A5E14;--g:#3F6147}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Satoshi',system-ui,sans-serif;font-weight:500;
+ min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;overflow-x:hidden}
+header{width:100%;max-width:1120px;padding:8px 4px 14px}
+.eyebrow{font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.06em;color:var(--s);font-weight:700}
+h1{font-size:clamp(30px,6vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.02;margin-top:6px}
+.sub{color:var(--sec);margin-top:8px;font-size:15px}
+.stage{width:100%;max-width:1120px;position:relative;background:var(--sea);border:1px solid var(--line);
+ border-radius:3px;overflow:hidden}
+svg{display:block;width:100%;height:auto}
+.isla{fill:var(--land);stroke:var(--g);stroke-width:3;stroke-linejoin:round}
+.isla-sombra{fill:var(--g);opacity:.16}
+.ruta-base{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+.ruta{fill:none;stroke:var(--s);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;
+ stroke-dasharray:14 11}
+.pin{opacity:0}
+.pin circle{fill:#fff;stroke:var(--ink);stroke-width:3}
+.pin.hito circle{fill:var(--s);stroke:var(--s)}
+.pin text{font-family:'Satoshi',sans-serif;font-weight:700;font-size:19px;fill:var(--ink);
+ paint-order:stroke;stroke:var(--bg);stroke-width:5;stroke-linejoin:round}
+.pin.hito text{fill:var(--s)}
+#auto{opacity:0}
+.cartel{position:absolute;left:14px;bottom:14px;background:var(--bg);border:1px solid var(--line);
+ border-radius:3px;padding:12px 15px;max-width:min(340px,62%);opacity:0;transform:translateY(10px);
+ transition:opacity .45s,transform .45s}
+.cartel.on{opacity:1;transform:none}
+.cartel .dia{font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.06em;color:var(--s);font-weight:700}
+.cartel h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-top:3px;line-height:1.15}
+.cartel p{color:var(--sec);font-size:13.5px;margin-top:5px;line-height:1.4}
+.foto{position:absolute;right:14px;top:14px;width:min(280px,40%);border:1px solid var(--line);
+ border-radius:3px;overflow:hidden;background:var(--bg);opacity:0;transform:translateY(-10px) scale(.97);
+ transition:opacity .5s,transform .5s}
+.foto.on{opacity:1;transform:none}
+.foto img{width:100%;height:170px;object-fit:cover;display:block}
+.foto span{display:block;padding:8px 10px;font-size:12px;font-variant-caps:all-small-caps;
+ letter-spacing:.05em;color:var(--sec);font-weight:700}
+.barra{width:100%;max-width:1120px;display:flex;align-items:center;gap:14px;margin-top:14px}
+.prog{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--s)}
+button{font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);background:var(--bg);
+ border:1px solid var(--line);border-radius:3px;padding:10px 16px;cursor:pointer}
+button:hover{border-color:var(--ink)}
+footer{width:100%;max-width:1120px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+ color:var(--note);font-size:12.5px;line-height:1.6}
+@media (max-width:700px){
+ .foto{width:44%;right:10px;top:10px}.foto img{height:110px}
+ .cartel{max-width:70%;left:10px;bottom:10px;padding:10px 12px}
+ .cartel h3{font-size:16px}.cartel p{font-size:12px}
+}
+</style></head><body>
+
+<header>
+  <div class="eyebrow">28 de septiembre — 2 de octubre de 2026</div>
+  <h1>Sicilia, el roadtrip</h1>
+  <p class="sub">Se entra por Catania y se sale por Palermo. Cinco días cruzando la isla en auto, sin repetir un kilómetro.</p>
+</header>
+
+<div class="stage">
+<svg viewBox="-45 -45 1090 730" id="mapa">
+  <path class="isla-sombra" d="M128.3,63.9 C136.3,64.3 162.8,92.6 173.0,97.8 C183.2,103.0 214.2,110.0 223.7,112.8 C233.2,115.6 252.6,127.3 262.5,124.1 C272.4,120.9 302.8,82.7 316.2,82.7 C329.6,82.7 373.8,119.3 387.8,124.1 C401.8,128.9 434.1,128.6 447.5,127.8 C460.9,127.0 496.6,116.2 513.1,116.6 C529.6,117.0 585.7,132.4 602.6,131.6 C619.5,130.8 657.5,114.6 671.2,109.0 C684.9,103.4 718.1,80.2 730.8,79.0 C743.5,77.8 779.4,98.6 790.5,97.8 C801.6,97.0 826.0,78.6 835.2,71.4 C844.4,64.2 870.0,29.7 877.0,30.1 C884.0,30.5 888.5,75.2 900.9,75.2 C913.3,75.2 986.0,31.7 993.3,30.1 C1000.6,28.5 976.2,51.4 969.5,60.2 C962.8,69.0 936.7,103.2 930.7,112.8 C924.7,122.4 916.9,142.4 912.8,150.4 C908.7,158.4 896.4,178.8 891.9,188.0 C887.4,197.2 874.5,228.1 871.0,236.9 C867.5,245.7 863.5,261.9 859.1,270.7 C854.7,279.5 833.1,310.4 829.3,319.6 C825.5,328.8 820.8,349.2 823.3,357.2 C825.8,365.2 848.0,388.0 853.1,394.8 C858.2,401.6 867.2,414.7 871.0,421.1 C874.8,427.5 886.7,448.6 888.9,455.0 C891.1,461.4 894.4,472.5 891.9,481.3 C889.4,490.1 871.1,526.9 865.1,537.7 C859.1,548.5 837.4,573.6 835.2,582.8 C833.0,592.0 849.0,621.0 844.2,624.2 C839.4,627.4 799.4,614.1 790.5,612.9 C781.6,611.7 769.3,615.7 760.7,612.9 C752.1,610.1 719.5,591.0 710.0,586.6 C700.5,582.2 679.2,575.5 671.2,571.5 C663.2,567.5 642.7,555.4 635.4,549.0 C628.1,542.6 608.6,517.8 602.6,511.4 C596.6,505.0 590.8,493.2 578.7,488.8 C566.6,484.4 505.7,475.2 489.2,470.0 C472.7,464.8 437.0,447.1 423.6,439.9 C410.2,432.7 377.9,411.1 363.9,402.3 C349.9,393.5 306.3,366.4 292.3,357.2 C278.3,348.0 246.4,322.6 232.7,315.8 C219.0,309.0 179.7,298.9 164.1,293.3 C148.5,287.7 98.3,269.2 86.5,263.2 C74.7,257.2 58.5,242.9 53.7,236.9 C48.9,230.9 43.1,215.2 41.8,206.8 C40.5,198.4 38.9,166.7 41.8,157.9 C44.7,149.1 62.6,130.9 68.6,124.1 C74.6,117.3 92.0,100.4 98.4,94.0 C104.8,87.6 120.3,63.5 128.3,63.9 Z" transform="translate(7,9)"/>
+  <path class="isla" id="isla" d="M128.3,63.9 C136.3,64.3 162.8,92.6 173.0,97.8 C183.2,103.0 214.2,110.0 223.7,112.8 C233.2,115.6 252.6,127.3 262.5,124.1 C272.4,120.9 302.8,82.7 316.2,82.7 C329.6,82.7 373.8,119.3 387.8,124.1 C401.8,128.9 434.1,128.6 447.5,127.8 C460.9,127.0 496.6,116.2 513.1,116.6 C529.6,117.0 585.7,132.4 602.6,131.6 C619.5,130.8 657.5,114.6 671.2,109.0 C684.9,103.4 718.1,80.2 730.8,79.0 C743.5,77.8 779.4,98.6 790.5,97.8 C801.6,97.0 826.0,78.6 835.2,71.4 C844.4,64.2 870.0,29.7 877.0,30.1 C884.0,30.5 888.5,75.2 900.9,75.2 C913.3,75.2 986.0,31.7 993.3,30.1 C1000.6,28.5 976.2,51.4 969.5,60.2 C962.8,69.0 936.7,103.2 930.7,112.8 C924.7,122.4 916.9,142.4 912.8,150.4 C908.7,158.4 896.4,178.8 891.9,188.0 C887.4,197.2 874.5,228.1 871.0,236.9 C867.5,245.7 863.5,261.9 859.1,270.7 C854.7,279.5 833.1,310.4 829.3,319.6 C825.5,328.8 820.8,349.2 823.3,357.2 C825.8,365.2 848.0,388.0 853.1,394.8 C858.2,401.6 867.2,414.7 871.0,421.1 C874.8,427.5 886.7,448.6 888.9,455.0 C891.1,461.4 894.4,472.5 891.9,481.3 C889.4,490.1 871.1,526.9 865.1,537.7 C859.1,548.5 837.4,573.6 835.2,582.8 C833.0,592.0 849.0,621.0 844.2,624.2 C839.4,627.4 799.4,614.1 790.5,612.9 C781.6,611.7 769.3,615.7 760.7,612.9 C752.1,610.1 719.5,591.0 710.0,586.6 C700.5,582.2 679.2,575.5 671.2,571.5 C663.2,567.5 642.7,555.4 635.4,549.0 C628.1,542.6 608.6,517.8 602.6,511.4 C596.6,505.0 590.8,493.2 578.7,488.8 C566.6,484.4 505.7,475.2 489.2,470.0 C472.7,464.8 437.0,447.1 423.6,439.9 C410.2,432.7 377.9,411.1 363.9,402.3 C349.9,393.5 306.3,366.4 292.3,357.2 C278.3,348.0 246.4,322.6 232.7,315.8 C219.0,309.0 179.7,298.9 164.1,293.3 C148.5,287.7 98.3,269.2 86.5,263.2 C74.7,257.2 58.5,242.9 53.7,236.9 C48.9,230.9 43.1,215.2 41.8,206.8 C40.5,198.4 38.9,166.7 41.8,157.9 C44.7,149.1 62.6,130.9 68.6,124.1 C74.6,117.3 92.0,100.4 98.4,94.0 C104.8,87.6 120.3,63.5 128.3,63.9 Z"/>
+  <path class="ruta-base" id="rutaBase" d="M830.2,316.6 C837.2,301.5 881.9,207.4 890.5,187.4 C899.1,167.4 903.9,145.5 903.9,145.5 C903.9,145.5 923.2,166.8 890.5,187.4 C857.8,208.0 658.5,309.4 623.6,321.9 C588.7,334.4 591.6,294.5 591.6,294.5 C591.6,294.5 626.3,332.0 623.6,321.9 C620.9,311.8 581.3,231.8 568.5,207.9 C555.7,184.0 543.1,130.8 513.7,116.8 C484.3,102.8 342.1,90.0 316.6,88.1 C291.1,86.2 297.7,99.4 295.2,100.9"/>
+  <path class="ruta" id="ruta" d="M830.2,316.6 C837.2,301.5 881.9,207.4 890.5,187.4 C899.1,167.4 903.9,145.5 903.9,145.5 C903.9,145.5 923.2,166.8 890.5,187.4 C857.8,208.0 658.5,309.4 623.6,321.9 C588.7,334.4 591.6,294.5 591.6,294.5 C591.6,294.5 626.3,332.0 623.6,321.9 C620.9,311.8 581.3,231.8 568.5,207.9 C555.7,184.0 543.1,130.8 513.7,116.8 C484.3,102.8 342.1,90.0 316.6,88.1 C291.1,86.2 297.7,99.4 295.2,100.9"/>
+  <g id="pines"></g>
+  <g id="auto">
+    <g transform="translate(-27,-19) scale(1.5)">
+      <ellipse cx="18" cy="25" rx="17" ry="3.2" fill="#121212" opacity=".16"/>
+      <path d="M3 20 q0-8 7-9 l3-6 q1-2 3-2 h9 q2 0 3 2 l3 6 q7 1 7 9 v2 q0 2-2 2 h-31 q-2 0-2-2 z"
+            fill="#A8462F" stroke="#121212" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M13 11 h9 l2.4 5 h-13.8 z" fill="#CFE0E6" stroke="#121212" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="10" cy="24" r="4.4" fill="#121212"/><circle cx="10" cy="24" r="1.7" fill="#F3F1EC"/>
+      <circle cx="26" cy="24" r="4.4" fill="#121212"/><circle cx="26" cy="24" r="1.7" fill="#F3F1EC"/>
+    </g>
+  </g>
+</svg>
+  <div class="cartel" id="cartel"><div class="dia" id="cDia"></div><h3 id="cTit"></h3><p id="cTxt"></p></div>
+  <div class="foto" id="foto"><img id="fImg" alt=""><span id="fCap"></span></div>
+</div>
+
+<div class="barra">
+  <button id="play">Volver a reproducir</button>
+  <div class="prog"><i id="progI"></i></div>
+</div>
+
+<footer>
+  Recorrido real del bloque de Sicilia. Las distancias son por autopista y ruta nacional.
+  Fotos de Wikimedia Commons. Parte del itinerario de Europa 2026.
+</footer>
+
+<script>
+const STOPS={"catania": [830.2, 316.6], "taormina": [890.5, 187.4], "savoca": [903.9, 145.5], "valguarnera": [623.6, 321.9], "enna": [591.6, 294.5], "gangi": [568.5, 207.9], "cefalu": [513.7, 116.8], "palermo": [316.6, 88.1], "monreale": [295.2, 100.9]};
+const LEGS=[
+ {to:'catania',dia:'Lunes 28',tit:'Llegada a Catania',txt:'Vuelo desde Nápoles y auto en el aeropuerto. Taormina está a 50 km.',dur:1.6},
+ {to:'taormina',dia:'Lunes 28',tit:'Taormina',txt:'El teatro griego con el Etna de fondo. La vista más famosa de la isla.',foto:'taormina',cap:'Taormina y el Etna',dur:2.6},
+ {to:'savoca',dia:'Martes 29',tit:'Savoca y Forza d Agrò',txt:'Los pueblos de El Padrino, a 40 km. El Bar Vitelli y la iglesia donde Michael se casa con Apollonia.',foto:'savoca',cap:'Savoca, sobre la costa',dur:2.4},
+ {to:'taormina',dia:'Martes 29',tit:'Vuelta a Taormina',txt:'Noche en el pueblo.',dur:1.8},
+ {to:'valguarnera',dia:'Miércoles 30',tit:'Valguarnera Caropepe',txt:'El pueblo de los nonos. 120 km por la A19, llegando a la mañana: el Comune atiende de 9 a 13.',foto:'valguarnera',cap:'Valguarnera Caropepe',dur:4.2,hito:true},
+ {to:'enna',dia:'Miércoles 30',tit:'Enna',txt:'A 25 km, la capital de provincia más alta de Italia, a 931 metros. Se ve media isla.',foto:'enna',cap:'Enna, a 931 metros',dur:2.0},
+ {to:'valguarnera',dia:'Miércoles 30',tit:'Noche en el centro',txt:'',dur:1.2},
+ {to:'gangi',dia:'Jueves 1',tit:'Gangi',txt:'En las Madonie. Elegido el pueblo más lindo de Italia en 2014.',dur:2.6},
+ {to:'cefalu',dia:'Jueves 1',tit:'Cefalù',txt:'La catedral normanda y el mar. Bajada a la costa norte.',foto:'cefalu',cap:'Cefalù y la Rocca',dur:2.4},
+ {to:'palermo',dia:'Jueves 1',tit:'Palermo',txt:'Última noche en la isla.',foto:'palermo',cap:'Palermo',dur:3.0},
+ {to:'monreale',dia:'Viernes 2',tit:'Monreale',txt:'A 15 minutos, antes del vuelo a Madrid. 6.500 m² de mosaicos bizantinos.',foto:'monreale',cap:'Monreale',dur:2.2,hito:true}
+];
+
+const ruta=document.getElementById('ruta'), base=document.getElementById('rutaBase');
+const isla=document.getElementById('isla'), auto=document.getElementById('auto');
+const pines=document.getElementById('pines');
+const cartel=document.getElementById('cartel'), foto=document.getElementById('foto');
+const L=ruta.getTotalLength();
+ruta.style.strokeDasharray=L; ruta.style.strokeDashoffset=L;
+base.style.strokeDasharray=L; base.style.strokeDashoffset=L;
+const LI=isla.getTotalLength();
+
+/* posición de cada parada sobre la ruta, en longitud */
+function lenDe(p){
+  let mejor=0,dmin=1e9;
+  for(let l=0;l<=L;l+=2){const q=ruta.getPointAtLength(l);
+    const d=(q.x-p[0])**2+(q.y-p[1])**2; if(d<dmin){dmin=d;mejor=l;}}
+  return mejor;
+}
+const marcas=[]; let acum=0;
+LEGS.forEach(g=>{ acum+=g.dur; marcas.push({...g,t:acum,len:lenDe(STOPS[g.to])}); });
+const TOTAL=acum;
+
+/* pines */
+const puestos=new Set();
+const ORDEN=['catania','taormina','savoca','valguarnera','enna','gangi','cefalu','palermo','monreale'];
+const NOMBRE={catania:'Catania',taormina:'Taormina',savoca:'Savoca',valguarnera:'Valguarnera',
+ enna:'Enna',gangi:'Gangi',cefalu:'Cefalù',palermo:'Palermo',monreale:'Monreale'};
+const HITO={valguarnera:1,monreale:1};
+const DER={catania:1,taormina:1,savoca:1,enna:0,valguarnera:0,gangi:1,cefalu:1,palermo:0,monreale:0};
+const DY={savoca:-14,taormina:9,monreale:22,palermo:-4,enna:-2,valguarnera:20};
+ORDEN.forEach(k=>{
+  const [x,y]=STOPS[k];
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','pin'+(HITO[k]?' hito':'')); g.dataset.k=k;
+  g.innerHTML=`<circle cx="${x}" cy="${y}" r="${HITO[k]?9:7}"/>`+
+    `<text x="${x+(DER[k]?16:-16)}" y="${y+(DY[k]??7)}" text-anchor="${DER[k]?'start':'end'}">${NOMBRE[k]}</text>`;
+  pines.appendChild(g);
+});
+function mostrarPin(k){
+  const g=pines.querySelector(`[data-k="${k}"]`); if(!g||puestos.has(k))return; puestos.add(k);
+  g.style.transition='opacity .4s'; g.style.opacity=1;
+  const c=g.querySelector('circle'); const r=c.getAttribute('r');
+  c.animate([{r:0},{r:r*1.7},{r:r}],{duration:520,easing:'cubic-bezier(.34,1.56,.64,1)'});
+}
+
+let t0=null,raf=null;
+function frame(ts){
+  if(!t0)t0=ts;
+  const t=(ts-t0)/1000;
+  /* isla se dibuja */
+  const pi=Math.min(t/1.4,1);
+  isla.style.strokeDasharray=LI; isla.style.strokeDashoffset=LI*(1-pi);
+  if(t<1.4){ raf=requestAnimationFrame(frame); return; }
+  const tv=t-1.4;
+  document.getElementById('progI').style.width=Math.min(tv/TOTAL,1)*100+'%';
+  /* tramo actual */
+  let i=0; while(i<marcas.length-1 && tv>marcas[i].t) i++;
+  const desde = i===0?0:marcas[i-1].len, hasta=marcas[i].len;
+  const tIni = i===0?0:marcas[i-1].t, tFin=marcas[i].t;
+  const f=Math.max(0,Math.min((tv-tIni)/(tFin-tIni),1));
+  const ease=f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2;
+  const len=desde+(hasta-desde)*ease;
+  ruta.style.strokeDashoffset=L-Math.max(...marcas.slice(0,i).map(m=>m.len).concat([len]));
+  base.style.strokeDashoffset=ruta.style.strokeDashoffset;
+  const p=ruta.getPointAtLength(len), p2=ruta.getPointAtLength(Math.min(len+6,L));
+  const ang=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI;
+  auto.style.opacity=1;
+  auto.setAttribute('transform',`translate(${p.x},${p.y}) rotate(${Math.abs(ang)>90?ang+180:ang}) `+
+    (Math.abs(ang)>90?'scale(-1,1)':''));
+  /* cartel y foto al llegar */
+  if(f>.55) pintar(i);
+  if(tv<TOTAL) raf=requestAnimationFrame(frame);
+  else { auto.style.opacity=1; }
+}
+let ultimo=-1;
+function pintar(i){
+  if(i===ultimo) return; ultimo=i;
+  const m=marcas[i];
+  mostrarPin(m.to);
+  document.getElementById('cDia').textContent=m.dia;
+  document.getElementById('cTit').textContent=m.tit;
+  document.getElementById('cTxt').textContent=m.txt||'';
+  cartel.classList.add('on');
+  if(m.foto){
+    const img=document.getElementById('fImg');
+    img.src='assets/roadtrip/'+m.foto+'.jpg';
+    document.getElementById('fCap').textContent=m.cap||'';
+    foto.classList.remove('on'); void foto.offsetWidth; foto.classList.add('on');
+  }
+}
+function reproducir(){
+  cancelAnimationFrame(raf); t0=null; ultimo=-1; puestos.clear();
+  pines.querySelectorAll('.pin').forEach(g=>{g.style.transition='none';g.style.opacity=0;});
+  cartel.classList.remove('on'); foto.classList.remove('on');
+  ruta.style.strokeDashoffset=L; base.style.strokeDashoffset=L; auto.style.opacity=0;
+  document.getElementById('progI').style.width='0';
+  raf=requestAnimationFrame(frame);
+}
+document.getElementById('play').onclick=reproducir;
+reproducir();
+</script>
+</body></html>
