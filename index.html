@@ -432,6 +432,7 @@ const GEO={
  'positano':  {n:'Positano',  c:'Italia', ll:[40.6281,14.4850], ph:0},
  'sorrento':  {n:'Sorrento',  c:'Italia', ll:[40.6263,14.3758], ph:3},
  'palermo':   {n:'Palermo',   c:'Italia', ll:[38.1157,13.3615], ph:3},
+ 'sicilia':   {n:'Sicilia',   c:'Italia', ll:[37.7500,14.2500], ph:3},
  'catania':   {n:'Catania',   c:'Italia', ll:[37.5079,15.0830], ph:0},
  'taormina':  {n:'Taormina',  c:'Italia', ll:[37.8516,15.2853], ph:0},
  'siracusa':  {n:'Siracusa',  c:'Italia', ll:[37.0755,15.2866], ph:0},
@@ -605,6 +606,7 @@ const PLACES={
  roma:['Piazza Navona','Panteón','Fontana di Trevi — muy temprano','Trastevere de noche','Escalinata de la Plaza de España','Barrio judío — carciofi alla giudia','Castel Sant Angelo','Basílica de San Clemente — tres iglesias superpuestas','Villa Borghese','Testaccio — donde comen los romanos','Campo de Fiori'],
  sorrento:['Marina Grande y sus casas de colores','El centro histórico y la Piazza Tasso','El paseo del acantilado, con el Vesubio de fondo','El limoncello, que se hace acá','Bagni della Regina Giovanna, piscina natural','Amalfi y su Duomo de San Andrés','Positano, mejor visto desde el mar','Capri y la Piazzetta','Salerno: Duomo de San Mateo y lungomare','Ravello y la Terraza del Infinito'],
  salerno:['Duomo de San Mateo y su cripta','Centro storico y Via dei Mercanti','Lungomare Trieste','Castello di Arechi','Giardino della Minerva','Amalfi en ferry — 35 min','Ravello — Villa Rufolo y la Terraza del Infinito','Positano — ojo, son cientos de escalones','Paestum — tres templos griegos, 40 min en tren'],
+ sicilia:['El pueblo de los abuelos','Monreale y sus mosaicos bizantinos','La Capilla Palatina, en Palermo','Los mercados de Ballaro y del Capo','Cefalu, pueblo costero con catedral normanda','Segesta, templo dorico solo en una colina','El Valle de los Templos, en Agrigento','Taormina y su teatro griego frente al Etna','Siracusa y la isla de Ortigia','Cannoli, arancini y granita con brioche'],
  palermo:['Capilla Palatina — mosaicos bizantinos','Catedral de Palermo','Monreale — 6.500 m2 de mosaicos','Mercados de Ballarò y del Capo','Teatro Massimo','Quattro Canti y Fontana Pretoria','Mondello — la playa de Palermo','Cefalù — 1 h en tren','Segesta — templo dórico solo en una colina','Valle de los Templos, Agrigento','El pueblo de los abuelos']
 };
 
@@ -987,14 +989,14 @@ function heroSlides(){
 /* Plan cargado 22/08/2026: Madrid 4 · Milán 1 · Florencia 3 · Roma 4 · Salerno 2 · Sicilia 4 · Madrid 1 */
 const SEED={
  c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',3],
-    ['Sorrento','2026-09-25',3],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
+    ['Sorrento','2026-09-25',3],['Sicilia','2026-09-28',4],['Madrid','2026-10-02',1]],
  t:[['2026-09-18','Madrid','Florencia','avion','2h 20m','16:10','Vueling e Iberia vuelan directo. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
     ['2026-09-22','Florencia','Roma','tren','1h 30m','','Salir de Florencia entre las 15:00 y las 16:30: el tour nocturno arranca 20:00 y hay que pasar por el hotel.'],
     ['2026-09-25','Roma','Salerno','tren','2h 00m','08:30','Frecciarossa directo. Dejar las valijas en la consigna de la estación de Salerno, unos 6 euros por bulto.'],
     ['2026-09-25','Salerno','Sorrento','auto','1h 20m','17:00','Traslado privado por autopista, evitando la ruta de curvas. En tren serían unas 2h15 con transbordo en Nápoles.'],
     ['2026-09-28','Sorrento','Nápoles (aeropuerto)','bus','1h 20m','','Bus Curreri directo, 10 euros, 8 salidas por día. Verificar el horario en curreriviaggi.it 24 h antes.'],
-    ['2026-09-28','Nápoles','Palermo','avion','1h 05m'],
-    ['2026-10-02','Palermo','Madrid','avion','2h 50m','','Tomar el vuelo de la mañana: es la única noche de margen antes del vuelo a Santiago.']],
+    ['2026-09-28','Nápoles','Sicilia','avion','1h 05m','','Falta definir el aeropuerto: Palermo o Catania, según cómo se arme el itinerario interno.'],
+    ['2026-10-02','Sicilia','Madrid','avion','2h 50m','','Tomar el vuelo de la mañana: es la única noche de margen antes del vuelo a Santiago.']],
  a:[['2026-09-14','Paseo suave y cena temprana','18:00','Llegada 14:05 más frontera EES. Jet lag: nada exigente.'],
     ['2026-09-15','Madrid relajado: walking tour, San Miguel, Retiro y Debod','10:00','Todo sin reserva de hora. Tapeo en Cava Baja a las 21.'],
     ['2026-09-16','Toledo, ida y vuelta en el día','08:30','Tren desde Atocha, 33 min. Escaleras mecánicas de Safont para la cuesta.'],
@@ -1014,16 +1016,15 @@ const SEED={
     ['2026-09-24','San Pedro y Castel Sant Angelo','12:30','Después del tour. La basílica es gratis; la fila de seguridad puede ser larga.'],
     ['2026-09-25','Salerno: Duomo de San Mateo, centro storico y lungomare','10:30','La ciudad del abuelo de Carge. Se llega de Roma a media mañana, con las valijas en la consigna de la estación.'],
     ['2026-09-26','Amalfi y Positano en barco','08:00','Civitatis, 8 a 9 horas, acompañante en español. Recogida en el hotel entre 7:15 y 9:00.','AMALFI'],
-    ['2026-09-27','Capri en ferry, por su cuenta','09:00','Ferry desde Sorrento, 20 a 25 min, salidas todo el día desde 7:15. Ir temprano para ganarle a los excursionistas de Nápoles, que llegan a partir de las 10.'],
-    ['2026-09-27','Capri: funicular, Piazzetta y Giardini di Augusto','10:00','El funicular sube desde Marina Grande en 3 minutos. Los Giardini di Augusto son planos, cuestan 1 o 2 euros y dan a los Faraglioni: la mejor vista con el menor esfuerzo.'],
-    ['2026-09-27','Anacapri y telesilla al Monte Solaro','15:00','12 minutos sentados hasta los 589 m. La mejor vista de la isla sin caminar nada.'],
-    ['2026-09-27','Último ferry de vuelta a Sorrento','18:30','OJO: el último sale cerca de las 19:00. Después de esa hora no hay forma de volver.'],
+    ['2026-09-27','Capri en ferry, por su cuenta','09:00','Ferry desde Sorrento, 20 a 25 min. Ir temprano: los excursionistas de Nápoles llegan a partir de las 10.'],
+    ['2026-09-27','Capri: funicular, Piazzetta y Giardini di Augusto','10:00','El funicular sube desde Marina Grande en 3 minutos. Los Giardini son planos, cuestan 1 o 2 euros y dan a los Faraglioni: la mejor vista con el menor esfuerzo. Si sobra tiempo, Anacapri y la telesilla al Monte Solaro.'],
+    ['2026-09-27','Ferry de vuelta a Sorrento','16:30','Deja la tarde y la noche libres en Sorrento. El último ferry sale cerca de las 19:00: después de esa hora no hay forma de volver.'],
+    ['2026-09-27','Sorrento: Marina Grande, Villa Comunale y el corso','17:30','La mejor hora de Sorrento. El atardecer sobre la bahía con el Vesubio de fondo se ve desde la Villa Comunale, que es gratis.'],
     ['2026-09-28','Mañana en Sorrento antes del bus','09:00','Marina Grande, la Piazza Tasso y el paseo del acantilado, según la hora del vuelo.'],
-    ['2026-09-28','Palermo: mercados y centro','17:00','Vuelo de mediodía desde Nápoles.'],
-    ['2026-09-29','Capilla Palatina, Catedral y Monreale','09:00','Monreale: 6.500 m2 de mosaicos bizantinos.'],
-    ['2026-09-30','El pueblo de los abuelos','09:00','Auto de alquiler y Permiso Internacional de Conducir. Pedir actas en el Comune.'],
-    ['2026-10-01','Cefalù, o Segesta y el Valle de los Templos','09:00','Cefalù tiene tren directo, lo más fácil.'],
-    ['2026-10-02','Madrid: última vuelta y cena','17:00','Vuelo Palermo-Madrid de la mañana. Valijas sin apuro.']]
+    ['2026-09-29','Todavía preparando el viaje','','Itinerario interno de Sicilia sin definir. Depende de dónde sea el pueblo de los abuelos.'],
+    ['2026-09-30','Todavía preparando el viaje','',''],
+    ['2026-10-01','Todavía preparando el viaje','',''],
+    ['2026-10-02','Madrid: última vuelta y cena','17:00','Se llega de Sicilia por la mañana. Valijas sin apuro.']]
 };
 SEED.c.forEach(([c,st,n])=>{ for(let k=0;k<n;k++) state.items.push({id:uid(),type:'ciudad',date:addD(st,k),city:c,lodge:'',notes:''}); });
 SEED.t.forEach(([d,f,t,m,du,dep,nt])=>state.items.push({id:uid(),type:'traslado',date:d,from:f,to:t,mode:m,dur:du,dep:dep||'',notes:nt||''}));
