@@ -22,6 +22,7 @@
   --bg:#F3F1EC; --surface:#F8F7F4; --card:#EAE7E0; --line:#D8D4CC;
   --title:#121212; --text:#3A3A38; --sec:#696966; --note:#A4A29C;
   --k100:#002FA7; --k70:#4969BC; --k40:#92A3D0; --k20:#C2CADE; --k10:#DBDEE5;
+  --s100:#A8462F; --s70:#C4715A; --s40:#DFA894; --s20:#EFD3C8; --s10:#F8E9E3;
   --ok:#4F6B4A; --warn:#B48A2E; --err:#8C3B2A;
   --nav-h:64px;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
@@ -148,10 +149,10 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip.traslado{background:var(--k10);border-color:var(--k40)}
 .chip.vuelo{background:var(--k10);border-color:var(--k70)}
 .chip.vuelo .tx span{color:var(--k70)}
-.chip.actividad{background:var(--card)}
-.chip.reservado{background:var(--k20);border-color:var(--k100)}
-.chip.reservado .tx span{color:var(--k70)}
-.res{display:block;font-style:normal;font-weight:700;color:var(--k100);font-size:11.5px;
+.chip.actividad{background:var(--s10);border-color:var(--s40)}
+.chip.reservado{background:var(--s20);border-color:var(--s100)}
+.chip.reservado .tx span{color:var(--s70)}
+.res{display:block;font-style:normal;font-weight:700;color:var(--s100);font-size:11.5px;
   font-variant-caps:all-small-caps;letter-spacing:.06em;margin-top:5px}
 .cellbody .res{font-size:10.5px;margin-top:3px}
 .chip.nota{background:transparent;border-style:dashed}
@@ -162,11 +163,11 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip .mv button:hover,.chip .mv button:active{color:var(--k100);background:var(--bg)}
 
 .places{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
-.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--k70);margin-bottom:12px}
+.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--s70);margin-bottom:12px}
 .places ul{list-style:none;font-size:14.5px;line-height:1.45}
 @media (min-width:760px){ .places ul{columns:2;column-gap:40px} }
 .places li{padding:6px 0;color:var(--text);break-inside:avoid;display:flex;gap:9px}
-.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--k40);margin-top:8px}
+.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--s40);margin-top:8px}
 
 /* ---------- FICHA DE ACTIVIDAD ---------- */
 #sheet{max-width:720px;width:100%;max-height:92vh;padding:0;border:1px solid var(--line);border-radius:2px;background:var(--surface);overflow:hidden}
@@ -182,15 +183,15 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
   background:linear-gradient(to top,rgba(18,18,18,.8),rgba(18,18,18,0))}
 .sh-dots{display:flex;gap:6px;justify-content:center;padding:12px 0 0}
 .sh-dots i{width:5px;height:5px;border-radius:50%;background:var(--note);opacity:.35}
-.sh-dots i.on{opacity:1;background:var(--k100)}
+.sh-dots i.on{opacity:1;background:var(--s100)}
 .sh-in{padding:22px 26px 34px}
 .sh-in h3{font-weight:700;font-size:23px;letter-spacing:-.025em;color:var(--title);line-height:1.15}
-.sh-when{color:var(--k70);font-weight:700;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.05em;margin-top:8px}
-.sh-code{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid var(--k100);border-radius:2px;
-  color:var(--k100);font-weight:700;font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.06em}
+.sh-when{color:var(--s70);font-weight:700;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.05em;margin-top:8px}
+.sh-code{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid var(--s100);border-radius:2px;
+  color:var(--s100);font-weight:700;font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.06em}
 .sh-lead{margin-top:16px;font-size:16px;line-height:1.5;color:var(--title);font-weight:700;letter-spacing:-.01em}
 .sh-in p.b{margin-top:13px;font-size:14.5px;line-height:1.6;color:var(--text)}
-.sh-h{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--k70);
+.sh-h{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--s70);
   font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em}
 .sh-spec{display:grid;grid-template-columns:1fr;gap:0;margin-top:6px}
 .sh-spec div{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -198,9 +199,9 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .sh-spec b{flex:0 0 34%;font-weight:500;color:var(--sec)}
 .sh-list{margin-top:8px;font-size:14.5px;line-height:1.5}
 .sh-list li{list-style:none;display:flex;gap:9px;padding:6px 0;color:var(--text)}
-.sh-list li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--k40);margin-top:8px}
+.sh-list li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--s40);margin-top:8px}
 .sh-list.warn li::before{background:var(--warn)}
-.sh-list.tip li::before{background:var(--k100)}
+.sh-list.tip li::before{background:var(--s100)}
 .sh-list.tip li{color:var(--title)}
 .sh-foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
@@ -230,7 +231,7 @@ td.drop{background:var(--k10)} td.drop .dnum{box-shadow:inset 0 2px 0 var(--k70)
 /* mini calendario en celular */
 .mini{display:none;gap:3px;flex-wrap:wrap;padding:1px 2px 0}
 .mini i{width:5px;height:5px;border-radius:50%;background:var(--k70)}
-.mini i.act{background:var(--faint,#B5AEA1)}
+.mini i.act{background:var(--s70)}
 @media (max-width:1099px){
   table.cal{min-width:0}
   table.cal td{height:auto;min-height:74px}
