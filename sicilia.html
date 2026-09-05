@@ -166,7 +166,8 @@ function mostrarPin(k){const g=pines.querySelector(`[data-k="${k}"]`); if(!g||pu
 /* ---------- musica ----------
    Si existe assets/roadtrip/musica.mp3 se usa ese archivo.
    Si no, suena una barcarola original compuesta para esta pagina. */
-let ac=null,gMaster=null,mudo=false,sched=null,evIdx=0,loopBase=0,pista=null,usaPista=false;
+let ac=null,gMaster=null,sched=null,evIdx=0,loopBase=0,pista=null,usaPista=false;
+let mudo=(()=>{try{return localStorage.getItem('sicilia-mudo')==='1';}catch(e){return false;}})();
 
 /* barcarola en 6/8, la menor: melodia cantada y arpegio suave */
 const OCT=0.34;                       /* corchea */
@@ -228,6 +229,7 @@ function marcarAudio(estado){
 }
 $('mute').onclick=()=>{
   mudo=!mudo;
+  try{ localStorage.setItem('sicilia-mudo', mudo?'1':'0'); }catch(e){}
   if(usaPista && pista) pista.volume=mudo?0:0.55;
   else if(!ac) audioOn();
   else if(gMaster) gMaster.gain.setTargetAtTime(mudo?0:0.9, ac.currentTime, 0.05);
@@ -282,4 +284,5 @@ function reproducir(){
 $('start').onclick=()=>{ $('velo').classList.add('off'); reproducir(); };
 $('replay').onclick=reproducir;
 isla.style.strokeDasharray=LI; isla.style.strokeDashoffset=0;
+marcarAudio();
 </script></body></html>
