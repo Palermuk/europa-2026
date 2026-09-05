@@ -28,7 +28,7 @@
   /* traslado terrestre — violeta */
   --v100:#584A7E; --v70:#7D719F; --v40:#B0A7C8; --v20:#DCD7E7; --v10:#EBE8F1;
   /* hitos del viaje — ocre */
-  --o100:#7E621C; --o70:#A98C3E; --o40:#CFB878; --o20:#EBDEB6; --o10:#F4EDDA;
+  --o100:#7A5E14; --o70:#A98C3E; --o40:#C9A94E; --o20:#E9DCAF; --o10:#F3EBD2;
   --ok:#4F6B4A; --warn:#B48A2E; --err:#8C3B2A;
   --nav-h:64px;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
@@ -157,26 +157,27 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip.vuelo{background:var(--k10);border-color:var(--k70)}
 .chip.vuelo[data-item]{cursor:pointer}
 .chip.vuelo .tx span{color:var(--k70)}
-.chip.actividad{background:var(--s10);border-color:var(--s40)}
+.chip.actividad{background:var(--o10);border-color:var(--o40)}
+.chip.actividad .tx span{color:var(--o100)}
 .chip.reservado{background:var(--s20);border-color:var(--s100);cursor:pointer}
 .chip.reservado .tx span{color:var(--s70)}
 .res{display:block;font-style:normal;font-weight:700;color:var(--s100);font-size:11.5px;
   font-variant-caps:all-small-caps;letter-spacing:.06em;margin-top:5px}
 .cellbody .res{font-size:10.5px;margin-top:3px}
 .chip.nota{background:transparent;border-style:dashed}
-.chip.hito{background:var(--o10);border-color:var(--o40)}
-.chip.hito .tx b{color:var(--o100)}
+.chip.hito{background:var(--card);border-color:var(--sec)}
+.chip.hito .tx b{color:var(--title)}
 .chip.locked{cursor:default}
 .chip .mv{display:flex;flex-direction:column;gap:2px;flex:0 0 auto;margin:-6px -6px -6px 0}
 .chip .mv button{width:30px;height:24px;color:var(--note);font-size:13px;line-height:1;border-radius:2px}
 .chip .mv button:hover,.chip .mv button:active{color:var(--k100);background:var(--bg)}
 
 .places{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
-.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--s70);margin-bottom:12px}
+.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--o100);margin-bottom:12px}
 .places ul{list-style:none;font-size:14.5px;line-height:1.45}
 @media (min-width:760px){ .places ul{columns:2;column-gap:40px} }
 .places li{padding:6px 0;color:var(--text);break-inside:avoid;display:flex;gap:9px}
-.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--s40);margin-top:8px}
+.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--o40);margin-top:8px}
 
 /* ---------- FICHA DE ACTIVIDAD ---------- */
 #sheet{max-width:720px;width:100%;max-height:92vh;padding:0;border:1px solid var(--line);border-radius:2px;background:var(--surface);overflow:hidden}
@@ -238,9 +239,10 @@ td.drop{background:var(--k10)} td.drop .dnum{box-shadow:inset 0 2px 0 var(--k70)
 /* mini calendario en celular */
 .mini{display:none;gap:3px;flex-wrap:wrap;padding:1px 2px 0}
 .mini i{width:5px;height:5px;border-radius:50%;background:var(--v70)}
-.mini i.act{background:var(--s70)}
+.mini i.act{background:var(--o70)}
+.mini i.exc{background:var(--s100)}
 .mini i.fly{background:var(--k70)}
-.mini i.mile{background:var(--o70)}
+.mini i.mile{background:var(--sec)}
 @media (max-width:1099px){
   table.cal{min-width:0}
   table.cal td{height:auto;min-height:74px}
@@ -726,7 +728,7 @@ function renderCal(){
           const prev=cityOn(addD(date,-1)); const cont=prev&&prev.city===it.city;
           body+=`<div class="band ${cont?'cont':''}"><span>${esc(it.city)}${it.lodge&&!cont?`<span class="lodge">${esc(it.lodge)}</span>`:''}</span></div>`;
         } else { body+=chip(it);
-          const cl = it.type==='actividad'?'act' : it.type==='hito'?'mile' : (it.type==='traslado'&&it.mode==='avion')?'fly' : '';
+          const cl = it.type==='actividad'?(it.res?'exc':'act') : it.type==='hito'?'mile' : (it.type==='traslado'&&it.mode==='avion')?'fly' : '';
           dots+=`<i class="${cl}"></i>`; }
       });
       body+=dots?`<div class="mini">${dots}</div>`:'';
