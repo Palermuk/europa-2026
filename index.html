@@ -430,7 +430,7 @@ const GEO={
  'salerno':   {n:'Salerno',   c:'Italia', ll:[40.6824,14.7681], ph:3},
  'amalfi':    {n:'Amalfi',    c:'Italia', ll:[40.6340,14.6027], ph:0},
  'positano':  {n:'Positano',  c:'Italia', ll:[40.6281,14.4850], ph:0},
- 'sorrento':  {n:'Sorrento',  c:'Italia', ll:[40.6263,14.3758], ph:0},
+ 'sorrento':  {n:'Sorrento',  c:'Italia', ll:[40.6263,14.3758], ph:3},
  'palermo':   {n:'Palermo',   c:'Italia', ll:[38.1157,13.3615], ph:3},
  'catania':   {n:'Catania',   c:'Italia', ll:[37.5079,15.0830], ph:0},
  'taormina':  {n:'Taormina',  c:'Italia', ll:[37.8516,15.2853], ph:0},
@@ -587,6 +587,7 @@ const PLACES={
  madrid:['Museo del Prado — gratis lun-sáb 18-20 h','Parque del Retiro y Palacio de Cristal','Plaza Mayor y Puerta del Sol','Mercado de San Miguel','Templo de Debod al atardecer — gratis','Palacio Real y catedral de la Almudena','La Latina y Cava Baja, de tapeo','Gran Vía','Museo Reina Sofía — el Guernica','Barrio de las Letras','Chocolatería San Ginés','Excursión a Toledo — 33 min en tren','Excursión a Segovia — 27 min en AVE'],
  florencia:['Piazzale Michelangelo al atardecer — bus 12 o 13','Ponte Vecchio','Mercato Centrale — almuerzo','Oltrarno y Santo Spirito — el barrio artesano','Basílica de Santa Croce — Miguel Ángel y Galileo','Baptisterio y Puertas del Paraíso','Piazza della Signoria y Loggia dei Lanzi','Jardines de Boboli — abren los lunes','Pisa en tren — 1 h, precio fijo','Lampredotto callejero'],
  roma:['Piazza Navona','Panteón','Fontana di Trevi — muy temprano','Trastevere de noche','Escalinata de la Plaza de España','Barrio judío — carciofi alla giudia','Castel Sant Angelo','Basílica de San Clemente — tres iglesias superpuestas','Villa Borghese','Testaccio — donde comen los romanos','Campo de Fiori'],
+ sorrento:['Marina Grande y sus casas de colores','El centro histórico y la Piazza Tasso','El paseo del acantilado, con el Vesubio de fondo','El limoncello, que se hace acá','Bagni della Regina Giovanna, piscina natural','Amalfi y su Duomo de San Andrés','Positano, mejor visto desde el mar','Capri y la Piazzetta','Salerno: Duomo de San Mateo y lungomare','Ravello y la Terraza del Infinito'],
  salerno:['Duomo de San Mateo y su cripta','Centro storico y Via dei Mercanti','Lungomare Trieste','Castello di Arechi','Giardino della Minerva','Amalfi en ferry — 35 min','Ravello — Villa Rufolo y la Terraza del Infinito','Positano — ojo, son cientos de escalones','Paestum — tres templos griegos, 40 min en tren'],
  palermo:['Capilla Palatina — mosaicos bizantinos','Catedral de Palermo','Monreale — 6.500 m2 de mosaicos','Mercados de Ballarò y del Capo','Teatro Massimo','Quattro Canti y Fontana Pretoria','Mondello — la playa de Palermo','Cefalù — 1 h en tren','Segesta — templo dórico solo en una colina','Valle de los Templos, Agrigento','El pueblo de los abuelos']
 };
@@ -969,12 +970,13 @@ function heroSlides(){
 /* ==================== INICIO ==================== */
 /* Plan cargado 22/08/2026: Madrid 4 · Milán 1 · Florencia 3 · Roma 4 · Salerno 2 · Sicilia 4 · Madrid 1 */
 const SEED={
- c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',4],
-    ['Salerno','2026-09-26',2],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
+ c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',3],
+    ['Sorrento','2026-09-25',3],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
  t:[['2026-09-18','Madrid','Florencia','avion','2h 20m','16:10','Vueling e Iberia vuelan directo. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
     ['2026-09-22','Florencia','Roma','tren','1h 30m','','Salir de Florencia entre las 15:00 y las 16:30: el tour nocturno arranca 20:00 y hay que pasar por el hotel.'],
-    ['2026-09-26','Roma','Salerno','tren','2h 00m'],
-    ['2026-09-28','Salerno','Nápoles (aeropuerto)','bus','1h 00m','',''],
+    ['2026-09-25','Roma','Salerno','tren','2h 00m','08:30','Frecciarossa directo. Dejar las valijas en la consigna de la estación de Salerno, unos 6 euros por bulto.'],
+    ['2026-09-25','Salerno','Sorrento','auto','1h 20m','17:00','Traslado privado por autopista, evitando la ruta de curvas. En tren serían unas 2h15 con transbordo en Nápoles.'],
+    ['2026-09-28','Sorrento','Nápoles (aeropuerto)','bus','1h 20m','','Bus Curreri directo, 10 euros, 8 salidas por día. Verificar el horario en curreriviaggi.it 24 h antes.'],
     ['2026-09-28','Nápoles','Palermo','avion','1h 05m'],
     ['2026-10-02','Palermo','Madrid','avion','2h 50m','','Tomar el vuelo de la mañana: es la única noche de margen antes del vuelo a Santiago.']],
  a:[['2026-09-14','Paseo suave y cena temprana','18:00','Llegada 14:05 más frontera EES. Jet lag: nada exigente.'],
@@ -994,9 +996,10 @@ const SEED={
     ['2026-09-23','Coliseo con acceso a la Arena, Foro y Palatino','10:00','Civitatis · 4 personas, en español. La arena es el piso de los gladiadores. Llevar pasaporte: la entrada es nominativa.','A41395938'],
     ['2026-09-24','Museos Vaticanos y Capilla Sixtina, grupo reducido','07:45','Civitatis · 4 personas, en español. Salir del hotel 07:00. Hombros y rodillas cubiertos, sin excepción.','A41395778'],
     ['2026-09-24','San Pedro y Castel Sant Angelo','12:30','Después del tour. La basílica es gratis; la fila de seguridad puede ser larga.'],
-    ['2026-09-25','Roma libre: Trevi temprano y Galleria Borghese','09:00','Borghese requiere turno.'],
-    ['2026-09-26','Salerno: Duomo de San Mateo y lungomare','17:00','La ciudad del abuelo de Carge.'],
-    ['2026-09-27','Amalfi y Ravello en ferry','09:00','Ferry a Amalfi 35 min. Ravello en bus desde Amalfi: Villa Rufolo.'],
+    ['2026-09-25','Salerno: Duomo de San Mateo, centro storico y lungomare','10:30','La ciudad del abuelo de Carge. Se llega de Roma a media mañana, con las valijas en la consigna de la estación.'],
+    ['2026-09-26','Amalfi y Positano en barco','08:00','Civitatis, 8 a 9 horas, acompañante en español. Recogida en el hotel entre 7:15 y 9:00. Se navega la costa, se desembarca en Amalfi y en Positano.'],
+    ['2026-09-27','Mañana libre en Sorrento','10:00','Marina Grande, el centro histórico y el paseo del acantilado. Sin horarios.'],
+    ['2026-09-27','Capri al atardecer, en barco','16:00','Civitatis, 6 horas. El acompañante habla solo inglés e italiano. Parada para nadar con snorkel y 3 horas libres en Capri de noche. Vuelta al hotel cerca de las 23.'],
     ['2026-09-28','Palermo: mercados y centro','17:00','Vuelo de mediodía desde Nápoles.'],
     ['2026-09-29','Capilla Palatina, Catedral y Monreale','09:00','Monreale: 6.500 m2 de mosaicos bizantinos.'],
     ['2026-09-30','El pueblo de los abuelos','09:00','Auto de alquiler y Permiso Internacional de Conducir. Pedir actas en el Comune.'],
