@@ -927,18 +927,17 @@ function heroSlides(){
 const SEED={
  c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',4],
     ['Salerno','2026-09-26',2],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
- t:[['2026-09-18','Madrid','Florencia','avion','2h 20m'],
-    ['2026-09-22','Florencia','Roma','tren','1h 30m · salir temprano, hay tour a las 20:00'],
+ t:[['2026-09-18','Madrid','Florencia','avion','2h 20m','16:10','Vueling e Iberia vuelan directo. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
+    ['2026-09-22','Florencia','Roma','tren','1h 30m','','Salir de Florencia entre las 15:00 y las 16:30: el tour nocturno arranca 20:00 y hay que pasar por el hotel.'],
     ['2026-09-26','Roma','Salerno','tren','2h 00m'],
-    ['2026-09-28','Salerno','Nápoles (aeropuerto)','bus','1h 00m'],
+    ['2026-09-28','Salerno','Nápoles (aeropuerto)','bus','1h 00m','',''],
     ['2026-09-28','Nápoles','Palermo','avion','1h 05m'],
-    ['2026-10-02','Palermo','Madrid','avion','2h 50m']],
+    ['2026-10-02','Palermo','Madrid','avion','2h 50m','','Tomar el vuelo de la mañana: es la única noche de margen antes del vuelo a Santiago.']],
  a:[['2026-09-14','Paseo suave y cena temprana','18:00','Llegada 14:05 más frontera EES. Jet lag: nada exigente.'],
     ['2026-09-15','Madrid relajado: walking tour, San Miguel, Retiro y Debod','10:00','Todo sin reserva de hora. Tapeo en Cava Baja a las 21.'],
     ['2026-09-16','Toledo, ida y vuelta en el día','08:30','Tren desde Atocha, 33 min. Escaleras mecánicas de Safont para la cuesta.'],
     ['2026-09-17','Segovia, ida y vuelta en el día','09:00','AVE desde Chamartín, 27 min. Acueducto, Alcázar y cochinillo (reservar mesa).'],
     ['2026-09-18','Madrid tranquilo antes del vuelo','10:00','Último día en Madrid: Prado o compras por Gran Vía, almuerzo largo. Dejar las valijas en el hotel y volver a buscarlas.'],
-    ['2026-09-18','Vuelo a Florencia','16:10','Vueling e Iberia vuelan directo, 2h20. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
     ['2026-09-19','Mañana libre por el centro','09:30','Baptisterio y Piazza della Signoria antes del tour. Sin horarios.'],
     ['2026-09-19','Visita guiada por la catedral de Florencia','11:15','Civitatis · 4 personas, en español. Sin subida a la cúpula. Va hoy porque la catedral cierra al turismo los domingos.','A41394112'],
     ['2026-09-19','Almuerzo en el Mercato Centrale','12:45','Sin reserva. A 5 minutos del Duomo. Hay tiempo de sobra hasta las 15.'],
@@ -961,7 +960,7 @@ const SEED={
     ['2026-10-02','Madrid: última vuelta y cena','17:00','Vuelo Palermo-Madrid de la mañana. Valijas sin apuro.']]
 };
 SEED.c.forEach(([c,st,n])=>{ for(let k=0;k<n;k++) state.items.push({id:uid(),type:'ciudad',date:addD(st,k),city:c,lodge:'',notes:''}); });
-SEED.t.forEach(([d,f,t,m,du])=>state.items.push({id:uid(),type:'traslado',date:d,from:f,to:t,mode:m,dur:du,notes:''}));
+SEED.t.forEach(([d,f,t,m,du,dep,nt])=>state.items.push({id:uid(),type:'traslado',date:d,from:f,to:t,mode:m,dur:du,dep:dep||'',notes:nt||''}));
 SEED.a.forEach(([d,nm,tm,nt,res])=>state.items.push({id:uid(),type:'actividad',date:d,name:nm,time:tm,notes:nt||'',res:res||''}));
 render(); heroSlides();
 </script>
