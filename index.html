@@ -149,12 +149,62 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip.vuelo{background:var(--k10);border-color:var(--k70)}
 .chip.vuelo .tx span{color:var(--k70)}
 .chip.actividad{background:var(--card)}
+.chip.reservado{background:var(--k20);border-color:var(--k100)}
+.chip.reservado .tx span{color:var(--k70)}
+.res{display:block;font-style:normal;font-weight:700;color:var(--k100);font-size:11.5px;
+  font-variant-caps:all-small-caps;letter-spacing:.06em;margin-top:5px}
+.cellbody .res{font-size:10.5px;margin-top:3px}
 .chip.nota{background:transparent;border-style:dashed}
 .chip.hito{background:var(--k10);border-color:var(--k70)}
 .chip.locked{cursor:default}
 .chip .mv{display:flex;flex-direction:column;gap:2px;flex:0 0 auto;margin:-6px -6px -6px 0}
 .chip .mv button{width:30px;height:24px;color:var(--note);font-size:13px;line-height:1;border-radius:2px}
 .chip .mv button:hover,.chip .mv button:active{color:var(--k100);background:var(--bg)}
+
+.places{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--k70);margin-bottom:12px}
+.places ul{list-style:none;font-size:14.5px;line-height:1.45}
+@media (min-width:760px){ .places ul{columns:2;column-gap:40px} }
+.places li{padding:6px 0;color:var(--text);break-inside:avoid;display:flex;gap:9px}
+.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--k40);margin-top:8px}
+
+/* ---------- FICHA DE ACTIVIDAD ---------- */
+#sheet{max-width:720px;width:100%;max-height:92vh;padding:0;border:1px solid var(--line);border-radius:2px;background:var(--surface);overflow:hidden}
+#sheet::backdrop{background:rgba(18,18,18,.45)}
+#sheetBody{overflow-y:auto;max-height:92vh;-webkit-overflow-scrolling:touch}
+.sheet-x{position:absolute;top:12px;right:12px;z-index:5;width:34px;height:34px;border-radius:50%;
+  background:rgba(18,18,18,.5);color:#F3F1EC;font-size:14px;line-height:1;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.sh-gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.sh-gal figure{flex:0 0 100%;scroll-snap-align:start;margin:0;position:relative}
+.sh-gal img{width:100%;height:260px;object-fit:cover;display:block}
+@media (min-width:760px){ .sh-gal img{height:330px} }
+.sh-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;color:#F3F1EC;font-size:12.5px;
+  background:linear-gradient(to top,rgba(18,18,18,.8),rgba(18,18,18,0))}
+.sh-dots{display:flex;gap:6px;justify-content:center;padding:12px 0 0}
+.sh-dots i{width:5px;height:5px;border-radius:50%;background:var(--note);opacity:.35}
+.sh-dots i.on{opacity:1;background:var(--k100)}
+.sh-in{padding:22px 26px 34px}
+.sh-in h3{font-weight:700;font-size:23px;letter-spacing:-.025em;color:var(--title);line-height:1.15}
+.sh-when{color:var(--k70);font-weight:700;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.05em;margin-top:8px}
+.sh-code{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid var(--k100);border-radius:2px;
+  color:var(--k100);font-weight:700;font-size:12px;font-variant-caps:all-small-caps;letter-spacing:.06em}
+.sh-lead{margin-top:16px;font-size:16px;line-height:1.5;color:var(--title);font-weight:700;letter-spacing:-.01em}
+.sh-in p.b{margin-top:13px;font-size:14.5px;line-height:1.6;color:var(--text)}
+.sh-h{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--k70);
+  font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em}
+.sh-spec{display:grid;grid-template-columns:1fr;gap:0;margin-top:6px}
+.sh-spec div{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.sh-spec div:last-child{border-bottom:0}
+.sh-spec b{flex:0 0 34%;font-weight:500;color:var(--sec)}
+.sh-list{margin-top:8px;font-size:14.5px;line-height:1.5}
+.sh-list li{list-style:none;display:flex;gap:9px;padding:6px 0;color:var(--text)}
+.sh-list li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--k40);margin-top:8px}
+.sh-list.warn li::before{background:var(--warn)}
+.sh-list.tip li::before{background:var(--k100)}
+.sh-list.tip li{color:var(--title)}
+.sh-foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sh-canc{flex:1;min-width:180px;color:var(--ok);font-size:13px;font-weight:700}
+.sh-cred{margin-top:16px;color:var(--note);font-size:11.5px;line-height:1.5}
 
 /* ---------- CALENDARIO (desktop) ---------- */
 .calwrap{overflow-x:auto;margin-top:14px}
@@ -336,6 +386,11 @@ textarea{resize:vertical;min-height:66px}
 </div></nav>
 
 <!-- ===================== DIÁLOGO ===================== -->
+<dialog id="sheet">
+  <button type="button" class="sheet-x" id="sheetX" aria-label="Cerrar">✕</button>
+  <div id="sheetBody"></div>
+</dialog>
+
 <dialog id="dlg">
   <form method="dialog">
     <div class="dlg-h"><h3 id="dlgTitle">Nuevo</h3></div>
@@ -375,6 +430,7 @@ textarea{resize:vertical;min-height:66px}
           <div><label>Actividad</label><input id="iName" placeholder="Coliseo"></div>
           <div><label>Hora</label><input type="time" id="iTime"></div>
         </div>
+        <div style="margin-top:20px"><label>Código de reserva</label><input id="iRes" placeholder="Vacío si todavía no está reservado"></div>
       </div>
 
       <div><label id="lblNotes">Notas</label><textarea id="iNotes" placeholder="Referencia, link, recordatorio"></textarea></div>
@@ -391,7 +447,7 @@ textarea{resize:vertical;min-height:66px}
 
 <script>
 /* ==================== CONSTANTES ==================== */
-const KEY='europa2026-v7';
+const KEY='europa2026-v9';
 const GRID_START='2026-09-07', GRID_END='2026-10-04';
 const TRIP_START='2026-09-14', TRIP_END='2026-10-02';
 const ACTIVE_START='2026-09-12', ACTIVE_END='2026-10-04';
@@ -448,6 +504,110 @@ const FLIGHTS=[
  {id:'f5',locked:true,date:'2026-10-03',type:'hito',time:'21:45',name:'Llegada a Santiago, 21:45',notes:'Fin del viaje europeo. Carge y Matías quedan en Santiago.'},
  {id:'f6',locked:true,date:'2026-10-04',type:'traslado',mode:'avion',from:'Santiago de Chile (SCL)',to:'Buenos Aires',dep:'',dur:'hora a confirmar',notes:'Solo José y Mary, de regreso a casa.'}
 ];
+
+/* Fichas de las actividades reservadas, indexadas por código de reserva */
+const DETAIL={
+ A41394112:{
+  tip:['La cúpula de Brunelleschi sigue siendo la mayor cúpula de mampostería del mundo: más de 4 millones de ladrillos, levantada entre 1420 y 1436 sin cimbra de madera. Nadie sabía si se iba a sostener.','El fresco del Juicio Final que corona la cúpula ocupa unos 3.600 m2. Vasari lo empezó en 1572 y Zuccaro lo terminó tras su muerte.','La fachada de mármol blanco, verde y rosa que se ve hoy es del siglo XIX. La original quedó inacabada y fue demolida en 1587.'],
+  ph:['duomo-1','duomo-2','duomo-3'],
+  cap:['La fachada neogótica de Santa Maria del Fiore','La nave interior','El Juicio Final de Vasari y Zuccaro, en la cúpula'],
+  lead:'Una de las joyas del Renacimiento italiano, con acceso sin colas y guía en español.',
+  txt:['A la hora indicada nos encontramos en las inmediaciones de la catedral. Tras una breve introducción, accedemos de forma prioritaria al interior del Duomo, uno de los templos más importantes del mundo y Patrimonio de la Humanidad.',
+       'Adentro descubrimos el origen de la catedral, erigida en honor de Santa María del Fiore, patrona de Florencia. Desde sus comienzos como una pequeña iglesia del siglo VII hasta convertirse en uno de los templos más grandes del mundo.',
+       'Seguimos con los secretos de su arquitectura y las obras que decoran el interior, y nos detenemos en la cúpula de Brunelleschi, que domina toda la ciudad: qué técnicas y qué materiales se usaron para levantarla.',
+       'El cierre es el fresco del Juicio Final de Vasari y Zuccaro. Es la superficie más grande del mundo decorada con esta técnica.'],
+  spec:[['Duración','40 min a 1 hora'],['Idioma','Guía en español'],['Bono','Electrónico, en el celular'],['Accesibilidad','No accesible en silla de ruedas']],
+  inc:['Guía en español','Entrada sin colas a la catedral','Entrada al Museo della Misericordia, según modalidad'],
+  ojo:['Para entrar a la catedral hay control de seguridad obligatorio. En horas pico la espera puede ser de 20 a 30 minutos.','El tour NO sube a la cúpula.','El Museo della Misericordia abre de lunes a sábado de 10:00 a 16:00 y cierra los domingos.'],
+  canc:'Cancelación gratuita hasta 48 horas antes.'},
+ A41395778:{
+  tip:['Si te detuvieras un minuto frente a cada obra de los Museos Vaticanos, tardarías cuatro años en verlos completos. Son unos 7 km de recorrido.','Miguel Ángel pintó la bóveda de pie, con la cabeza hacia atrás, no acostado como suele decirse. Tardó cuatro años y se quejaba de que no era pintor, sino escultor.','El Juicio Final escandalizó tanto por sus desnudos que un pintor posterior, apodado \'el calzonazos\', fue contratado para cubrirlos con paños.'],
+  ph:['vaticano-1','vaticano-2','vaticano-3'],
+  cap:['La bóveda de la Capilla Sixtina','La Galería de los Mapas','El Laocoonte, en el Museo Pío-Clementino'],
+  lead:'Los Museos Vaticanos y la Capilla Sixtina en grupo reducido, de 10 a 12 personas como máximo.',
+  txt:['Nos reunimos cerca de las murallas vaticanas. Visitar los Museos Vaticanos es entrar a una de las colecciones de arte más imponentes del mundo, y en grupo reducido la experiencia es otra.',
+       'Recorremos el Patio de la Piña, un oasis de calma antes del laberinto de arte; la Galería de los Mapas, con 120 metros de frescos cartográficos bajo un techo dorado; la Galería de los Tapices y los Candelabros, con el trabajo de los discípulos de Rafael; y el Museo Pío-Clementino, donde están el Laocoonte y el Apolo de Belvedere.',
+       'El punto culminante es la Capilla Sixtina, el mayor tesoro artístico del Vaticano y Patrimonio de la Humanidad desde 1984. Al ser grupo chico, el guía puede explicar los secretos de Miguel Ángel antes de entrar, porque adentro hay que guardar riguroso silencio.',
+       'Una vez adentro solo hay que mirar hacia arriba: la simbología de La creación de Adán y la fuerza dramática de El Juicio Final. Y recordar que es el lugar donde se celebran los cónclaves.'],
+  spec:[['Duración','3 horas'],['Grupo','De 10 a 12 personas'],['Idioma','Guía en español'],['Modalidad','Acceso a primera hora, antes de la apertura general'],['Accesibilidad','No apto para movilidad reducida ni carritos']],
+  inc:['Guía en español','Entrada a los Museos Vaticanos y la Capilla Sixtina','Grupo reducido de 10 a 12 personas'],
+  ojo:['Empieza 07:45: salir del hotel a las 07:00. Acostarse temprano el miércoles.','CÓDIGO DE VESTIMENTA: hombros y rodillas cubiertos, sin excepción, para los cuatro. Con musculosa o short no se entra. Un pañuelo grande en la mochila resuelve.','Adentro de la Sixtina hay que guardar silencio y no se pueden sacar fotos.','El orden del recorrido y las duraciones pueden cambiar.'],
+  canc:'Cancelación gratuita hasta 5 días antes.'},
+ A41396081:{
+  tip:['La Fontana di Trevi recauda alrededor de 1,4 millones de euros al año en monedas. Todo va a Cáritas de Roma.','Desde febrero de 2026 hay una tasa de 2 euros y cupo de 400 personas para bajar al borde del agua entre las 9 y las 21. De noche y con el tour, se ve desde arriba sin ese trámite.','El Panteón tiene la mayor cúpula de hormigón no armado jamás construida, del año 126, y sigue en pie. El óculo de 9 metros está abierto: cuando llueve, llueve adentro.'],
+  ph:['noche-1','noche-2','noche-3'],
+  cap:['La Fontana di Trevi iluminada','La Fontana del Nettuno, en Piazza Navona','El Panteón al anochecer'],
+  lead:'Las plazas y monumentos más representativos de Roma cuando la ciudad se viste de gala.',
+  txt:['Nos reunimos en la Plaza de España. Arrancamos hacia la Fontana di Trevi, para verla iluminada y tirar la moneda al agua, y seguimos hasta la Galleria Sciarra.',
+       'En el camino pasamos por la Piazza di Pietra y sus columnas corintias, y por la iglesia de San Ignacio de Loyola.',
+       'Uno de los momentos más lindos llega en el Panteón de Agripa, el antiguo templo romano que no puede faltar en ninguna visita a la ciudad.',
+       'Terminamos en Piazza Navona, con tiempo para fotografiar la Fontana dei Quattro Fiumi, la del Moro y la del Nettuno. De noche no parecen las mismas.'],
+  spec:[['Duración','2h a 2h 30m'],['Punto de encuentro','Plaza de España'],['Idioma','Guía en español'],['Bono','Electrónico, en el celular'],['Accesibilidad','No accesible en silla de ruedas']],
+  inc:['Guía en español'],
+  ojo:['Es el día de llegada a Roma: hay que estar en el hotel antes de las 19:30. Tomar un tren temprano desde Florencia.','La Galleria Sciarra cierra a las 19:00. En su lugar se visita la Piazza Colonna.','Son entre 2 y 3 horas caminando, de noche y sobre adoquín. Calzado cómodo.'],
+  canc:'Cancelación gratuita hasta 48 horas antes.'},
+ A41395938:{
+  tip:['El Coliseo entraba entre 50.000 y 80.000 espectadores y podía vaciarse en unos 15 minutos por los 80 accesos llamados vomitoria. Es el modelo de todos los estadios modernos.','El hipogeo, los subterráneos que se ven desde la arena, tenía 28 montacargas accionados a mano para hacer aparecer fieras y decorados en el escenario.','El Palatino es donde la leyenda ubica la cueva en que la loba amamantó a Rómulo y Remo. De ahí viene la palabra \'palacio\'.'],
+  ph:['coliseo-1','coliseo-2','coliseo-3'],
+  cap:['El interior del Coliseo y los subterráneos','Los túneles del hipogeo','El Arco de Tito, sobre la Vía Sacra'],
+  lead:'Los grandes vestigios de la Roma imperial, pisando el suelo de la arena donde luchaban los gladiadores.',
+  txt:['Nos reunimos cerca del Colosseo y entramos al Anfiteatro Flavio por la puerta de los gladiadores, para pisar la Arena: la plataforma de madera reconstruida donde se combatía hace 2000 años. A diferencia de la visita normal, desde acá se tiene una visión de 360 grados de las cáveas y una perspectiva directa del hipogeo.',
+       'Durante unos 30 minutos el guía explica la ingeniería romana y el funcionamiento de los ascensores que subían a las fieras desde los subterráneos. Es el lugar exacto de los munera y las venationes.',
+       'Seguimos al Monte Palatino, la más céntrica de las siete colinas y el yacimiento donde están las residencias de los emperadores. Desde ahí salen las mejores vistas del Circo Máximo y del Foro.',
+       'Terminamos en el Foro Romano caminando la Vía Sacra: el Templo de las Vestales, el Arco de Tito, el de Septimio Severo y la Curia Julia, antigua sede del Senado.'],
+  spec:[['Duración','2h 30m a 3h'],['Idioma','Guía en español'],['Bono','Electrónico, en el celular']],
+  inc:['Guía en español','Entradas a la Arena de gladiadores, el Foro Romano y el Palatino','Acceso a las gradas inferiores del Coliseo'],
+  ojo:['LLEVAR EL PASAPORTE. Las entradas son nominativas y no admiten cambios: el nombre tiene que coincidir exactamente con el documento. Si no coincide, no se entra.','Por el cupo oficial del Coliseo, la hora de inicio puede moverse hasta 3 horas. Avisan si pasa.','El orden del recorrido puede cambiar según el horario que asigne el Coliseo.','Casi todo el recorrido es al aire libre y sin sombra. Agua, gorra y calzado cerrado.'],
+  canc:'Cancelación gratuita hasta 5 días antes.'},
+ A41393964:{
+  tip:['La iglesia está desconsagrada: por eso puede funcionar como sala de conciertos. Conserva la acústica original del siglo XV, sin amplificación.','Queda en Via Santa Monaca, en pleno Oltrarno, a dos cuadras de la Piazza Santo Spirito: el mejor lugar de Florencia para cenar antes.','Es un formato de gala lírica: extractos de las arias más conocidas, no una ópera completa. Ideal para quien nunca fue a la ópera.'],
+  ph:['opera-1','opera-2','opera-3'],
+  cap:['El interior de Santa Mónica, hoy sala de conciertos','Uno de los frescos del templo','La nave, con su acústica natural'],
+  lead:'Un concierto de ópera en una iglesia desconsagrada del Oltrarno, con asiento garantizado.',
+  txt:['La iglesia de Santa Mónica, en pleno barrio de Oltrarno, es una joya escondida en el corazón de Florencia. Antiguamente formaba parte de un monasterio agustino; hoy, desconsagrada, acoge conciertos gracias a su acústica natural y su ambiente recogido.',
+       'Su decoración es notable: en el interior hay obras de Giovanni Maria Butteri, Baccio da Montelupo y Cosimo Ulivelli, entre otros.',
+       'El concierto reúne cantantes y músicos profesionales con piezas de Puccini, Rossini, Verdi y Mozart: extractos de Las bodas de Fígaro, El barbero de Sevilla, Madama Butterfly, La Bohème y La Traviata.',
+       'Termina a las 22:20.'],
+  spec:[['Duración','1h 05m'],['Termina','22:20'],['Idioma','Acompañante en español, inglés e italiano'],['Bono','Electrónico, en el celular'],['Accesibilidad','Solo para sillas plegables. Aseos accesibles']],
+  inc:['Entrada al concierto','Asiento garantizado'],
+  ojo:['Cenar antes en Santo Spirito, que queda a dos cuadras.'],
+  canc:'Cancelación gratuita hasta 1 hora antes.'},
+ A41393818:{
+  tip:['Uffizi significa literalmente \'oficinas\'. Cosme I de Médici mandó construir el edificio en 1560 para alojar las oficinas administrativas del ducado. La colección vino después.','El David mide 5,17 metros y Miguel Ángel lo talló entre 1501 y 1504, con 26 años, de un bloque de mármol que otros dos escultores habían abandonado por defectuoso.','En la Academia también están los Prigioni, cuatro esclavos inacabados que parecen estar saliendo de la piedra. Para mucha gente son más impresionantes que el David.'],
+  ph:['uffizi-1','uffizi-2','uffizi-3'],
+  cap:['Una sala de la Galería Uffizi','El nacimiento de Venus, de Botticelli','El David de Miguel Ángel, en la Academia'],
+  lead:'Paseo por el centro, Uffizi y la Academia en una sola jornada, con acceso prioritario a los dos museos.',
+  txt:['El día se divide en tres partes. Empieza por la mañana con un tour a pie por Florencia de una hora y media, similar a la visita guiada por el centro.',
+       'Sigue con unas dos horas en la Galería Uffizi, que alberga una de las colecciones de pintura más importantes del mundo: Botticelli, Miguel Ángel, Leonardo.',
+       'Cierra con alrededor de una hora en la Galería de la Academia, frente al David de Miguel Ángel, una de las esculturas más representativas del Renacimiento.',
+       'Entre Uffizi y la Academia hay aproximadamente una hora libre para comer.'],
+  spec:[['Duración','7 horas'],['Idioma','Guía en español, especializado en arte e historia'],['Bono','Electrónico, en el celular'],['Accesibilidad','No apto para personas de movilidad reducida']],
+  inc:['Guía de habla española','Entrada a la Uffizi con acceso prioritario','Entrada a la Academia con acceso prioritario'],
+  noinc:['Almuerzo'],
+  ojo:['Son 7 horas y el tour no es apto para movilidad reducida. Es el día más exigente de Florencia: no agendar nada más.','Por trabajos de restauración, algunas salas de la Uffizi podrían estar cerradas.','Quien tenga certificado de discapacidad puede pedir la devolución de la entrada avisando 72 horas antes.'],
+  canc:'Cancelación gratuita hasta 3 días antes.'},
+ A41395600:{
+  tip:['Debajo del mural de Vasari en el Salone dei Cinquecento podría estar escondida La batalla de Anghiari de Leonardo, perdida hace cinco siglos. Vasari dejó escrito \'cerca trova\' (busca y encontrarás) en uno de los estandartes.','El David de Miguel Ángel estuvo en la puerta de este palacio desde 1504 hasta 1873. El que está hoy afuera es una copia; el original está en la Academia.','La torre se llama de Arnolfo y son 223 escalones, menos de la mitad que la cúpula del Duomo. Desde ahí la vista incluye la cúpula.'],
+  ph:['vecchio-1','vecchio-2','vecchio-3'],
+  cap:['La torre de Arnolfo sobre la Piazza della Signoria','El Salone dei Cinquecento','El Studiolo de Francesco I'],
+  lead:'Símbolo de la vida política de Florencia desde hace más de siete siglos.',
+  txt:['La visita comienza muy cerca del Palazzo Vecchio y accedemos al palacio sin esperar colas. Recorremos sus salas y conocemos su historia, sus mitos y sus leyendas.',
+       'Entre las salas más importantes está el Salone dei Cinquecento, donde Leonardo y Miguel Ángel se enfrentaron en la creación de dos enormes murales, y las habitaciones privadas de Leonor de Toledo, esposa de Cósimo I.',
+       'El resto de los espacios acoge obras de Miguel Ángel, Donatello y Verrocchio.'],
+  spec:[['Duración','1h 30m a 2 horas'],['Idioma','Guía oficial en español'],['Bono','Electrónico, en el celular'],['Accesibilidad','Accesible en silla de ruedas, avisando al reservar y con acompañante']],
+  inc:['Guía oficial de habla española','Entrada reservada y sin colas','Auriculares en grupos de más de 15 personas'],
+  ojo:['Si el hall está cerrado por un evento privado, la visita se reduce a 1h 15m.'],
+  canc:'Cancelación gratuita hasta 48 horas antes.'}
+};
+
+/* Lugares para conocer por cuenta propia, sin tour ni reserva */
+const PLACES={
+ madrid:['Museo del Prado — gratis lun-sáb 18-20 h','Parque del Retiro y Palacio de Cristal','Plaza Mayor y Puerta del Sol','Mercado de San Miguel','Templo de Debod al atardecer — gratis','Palacio Real y catedral de la Almudena','La Latina y Cava Baja, de tapeo','Gran Vía','Museo Reina Sofía — el Guernica','Barrio de las Letras','Chocolatería San Ginés','Excursión a Toledo — 33 min en tren','Excursión a Segovia — 27 min en AVE'],
+ florencia:['Piazzale Michelangelo al atardecer — bus 12 o 13','Ponte Vecchio','Mercato Centrale — almuerzo','Oltrarno y Santo Spirito — el barrio artesano','Basílica de Santa Croce — Miguel Ángel y Galileo','Baptisterio y Puertas del Paraíso','Piazza della Signoria y Loggia dei Lanzi','Jardines de Boboli — abren los lunes','Pisa en tren — 1 h, precio fijo','Lampredotto callejero'],
+ roma:['Piazza Navona','Panteón','Fontana di Trevi — muy temprano','Trastevere de noche','Escalinata de la Plaza de España','Barrio judío — carciofi alla giudia','Castel Sant Angelo','Basílica de San Clemente — tres iglesias superpuestas','Villa Borghese','Testaccio — donde comen los romanos','Campo de Fiori'],
+ salerno:['Duomo de San Mateo y su cripta','Centro storico y Via dei Mercanti','Lungomare Trieste','Castello di Arechi','Giardino della Minerva','Amalfi en ferry — 35 min','Ravello — Villa Rufolo y la Terraza del Infinito','Positano — ojo, son cientos de escalones','Paestum — tres templos griegos, 40 min en tren'],
+ palermo:['Capilla Palatina — mosaicos bizantinos','Catedral de Palermo','Monreale — 6.500 m2 de mosaicos','Mercados de Ballarò y del Capo','Teatro Massimo','Quattro Canti y Fontana Pretoria','Mondello — la playa de Palermo','Cefalù — 1 h en tren','Segesta — templo dórico solo en una colina','Valle de los Templos, Agrigento','El pueblo de los abuelos']
+};
 
 /* ==================== ESTADO ==================== */
 let state={items:[]};
@@ -538,15 +698,15 @@ function chip(it,opts={}){
     return `<div class="chip ${it.mode==='avion'?'vuelo':'traslado'} ${it.locked?'locked':''}" ${dg}>
       <span class="tx"><b>${esc(it.from)} → ${esc(it.to)}</b><span>${sb}</span>${notes}</span>${mv}</div>`;
   }
-  if(it.type==='actividad') return `<div class="chip actividad" ${dg}>
-      <span class="tx"><b>${esc(it.name||'Actividad')}</b>${it.time?`<span>${it.time}</span>`:''}${notes}</span>${mv}</div>`;
+  if(it.type==='actividad') return `<div class="chip ${it.res?'reservado':'actividad'}" ${dg}>
+      <span class="tx"><b>${esc(it.name||'Actividad')}</b>${it.time?`<span>${it.time}</span>`:''}${it.res?`<em class="res">Reservado · ${esc(it.res)}${DETAIL[it.res]?' · ver ficha':''}</em>`:''}${notes}</span>${mv}</div>`;
   if(it.type==='hito') return `<div class="chip hito locked"><span class="tx"><b>${esc(it.name)}</b>${it.notes?`<small>${esc(it.notes)}</small>`:''}</span></div>`;
   return `<div class="chip nota" ${dg}><span class="tx"><b>${esc(it.name||it.notes||'Nota')}</b>${it.name&&it.notes?`<small>${esc(it.notes)}</small>`:''}</span>${mv}</div>`;
 }
 
 /* ---- agenda ---- */
 function renderAgenda(){
-  const bl=blocks(); let html='';
+  const bl=blocks(); let html=''; const seenPlaces=new Set();
   bl.forEach(b=>{
     if(b.name){
       const g=geo(b.name), ph=photos(b.name);
@@ -569,6 +729,14 @@ function renderAgenda(){
         <div class="list">${its.map(i=>chip(i,{notes:true})).join('')}
           <button type="button" class="add caps" data-add="${date}">＋ ${c?'Agregar':'Ciudad o actividad'}</button></div></div>`;
     });
+    if(b.name){
+      const k=slug(String(b.name).split(/[,/]| o | y /)[0]);
+      const lst=PLACES[k];
+      if(lst && !seenPlaces.has(k)){
+        seenPlaces.add(k);
+        html+=`<div class="places"><h4>Para conocer por su cuenta, sin tour</h4><ul>${lst.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+      }
+    }
     html+=`</section>`;
   });
   document.getElementById('agenda').innerHTML=html;
@@ -609,13 +777,56 @@ function gotoDay(date){
   const el=document.querySelector(`.day[data-day="${date}"]`);
   if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60);
 }
+/* ---- ficha de actividad ---- */
+function openSheet(it){
+  const d=DETAIL[it.res]; if(!d) return false;
+  const gal=d.ph.map((f,i)=>`<figure><img src="assets/actividades/${f}.jpg" alt="" loading="lazy">${d.cap&&d.cap[i]?`<figcaption>${esc(d.cap[i])}</figcaption>`:''}</figure>`).join('');
+  const dots=d.ph.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('');
+  const spec=(d.spec||[]).map(([k,v])=>`<div><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join('');
+  const li=a=>(a||[]).map(x=>`<li>${esc(x)}</li>`).join('');
+  document.getElementById('sheetBody').innerHTML=`
+    <div class="sh-gal" id="shGal">${gal}</div>
+    ${d.ph.length>1?`<div class="sh-dots" id="shDots">${dots}</div>`:''}
+    <div class="sh-in">
+      <h3>${esc(it.name)}</h3>
+      <div class="sh-when">${wd(it.date)} ${s2d(it.date).getUTCDate()} de ${MESES[s2d(it.date).getUTCMonth()]}${it.time?' · '+it.time+' h':''}</div>
+      <div class="sh-code">Reservado · ${esc(it.res)}</div>
+      <p class="sh-lead">${esc(d.lead)}</p>
+      ${(d.txt||[]).map(t=>`<p class="b">${esc(t)}</p>`).join('')}
+      ${spec?`<div class="sh-h">Detalles</div><div class="sh-spec">${spec}</div>`:''}
+      ${d.inc?`<div class="sh-h">Incluye</div><ul class="sh-list">${li(d.inc)}</ul>`:''}
+      ${d.noinc?`<div class="sh-h">No incluye</div><ul class="sh-list">${li(d.noinc)}</ul>`:''}
+      ${d.ojo?`<div class="sh-h">A tener en cuenta</div><ul class="sh-list warn">${li(d.ojo)}</ul>`:''}
+      ${d.tip?`<div class="sh-h">Datos que vale la pena saber</div><ul class="sh-list tip">${li(d.tip)}</ul>`:''}
+      <div class="sh-foot">
+        <span class="sh-canc">${esc(d.canc||'')}</span>
+        <button type="button" class="btn" id="shEdit">Editar en la agenda</button>
+      </div>
+      <p class="sh-cred">Fotos de Wikimedia Commons, bajo licencias Creative Commons o dominio público.</p>
+    </div>`;
+  const sh=document.getElementById('sheet'); sh.showModal();
+  document.getElementById('sheetBody').scrollTop=0;
+  const g=document.getElementById('shGal'), dd=document.getElementById('shDots');
+  if(g&&dd) g.onscroll=()=>{ const i=Math.round(g.scrollLeft/g.clientWidth);
+    dd.querySelectorAll('i').forEach((x,j)=>x.classList.toggle('on',j===i)); };
+  document.getElementById('shEdit').onclick=()=>{ sh.close(); openItem(it.id); };
+  return true;
+}
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+document.getElementById('sheetX').onclick=()=>document.getElementById('sheet').close();
+
 function bind(root){
   root.querySelectorAll('td[data-date]').forEach(td=>td.addEventListener('click',e=>{
     if(window.innerWidth>=1100) return;
     e.stopPropagation(); e.preventDefault(); gotoDay(td.dataset.date);
   },true));
   root.querySelectorAll('[data-add]').forEach(b=>b.onclick=e=>{e.stopPropagation();openItem(null,b.dataset.add);});
-  root.querySelectorAll('[data-item]').forEach(b=>b.onclick=e=>{ if(e.target.closest('[data-mv]')) return; e.stopPropagation(); openItem(b.dataset.item); });
+  root.querySelectorAll('[data-item]').forEach(b=>b.onclick=e=>{
+    if(e.target.closest('[data-mv]')) return; e.stopPropagation();
+    const it=state.items.find(x=>x.id===b.dataset.item);
+    if(it && it.res && openSheet(it)) return;
+    openItem(b.dataset.item);
+  });
   root.querySelectorAll('[data-mv]').forEach(b=>b.onclick=e=>{
     e.stopPropagation(); const [id,n]=b.dataset.mv.split('|'); moveItem(id,addD(state.items.find(x=>x.id===id).date,Number(n)));
   });
@@ -788,7 +999,7 @@ function openItem(id,date){
   $('dlgTitle').textContent=id?'Editar':'Nuevo';
   $('iDate').value=it.date; $('iCity').value=it.city||''; $('iLodge').value=it.lodge||'';
   $('iFrom').value=it.from||''; $('iTo').value=it.to||''; $('iMode').value=it.mode||'tren'; $('iDep').value=it.dep||''; $('iDur').value=it.dur||'';
-  $('iName').value=it.name||''; $('iTime').value=it.time||''; $('iNotes').value=it.notes||'';
+  $('iName').value=it.name||''; $('iTime').value=it.time||''; $('iRes').value=it.res||''; $('iNotes').value=it.notes||'';
   $('iDel').classList.toggle('hide',!id); setType(it.type); dlg.showModal();
 }
 dlg.addEventListener('close',()=>{
@@ -798,7 +1009,7 @@ dlg.addEventListener('close',()=>{
     if(o.type==='ciudad'){ if(!$('iCity').value.trim()) return; Object.assign(o,{city:$('iCity').value.trim(),lodge:$('iLodge').value.trim()});
       state.items=state.items.filter(x=>!(x.type==='ciudad'&&x.date===o.date&&x.id!==o.id)); }
     if(o.type==='traslado') Object.assign(o,{from:$('iFrom').value.trim(),to:$('iTo').value.trim(),mode:$('iMode').value,dep:$('iDep').value,dur:$('iDur').value.trim()});
-    if(o.type==='actividad') Object.assign(o,{name:$('iName').value.trim(),time:$('iTime').value});
+    if(o.type==='actividad') Object.assign(o,{name:$('iName').value.trim(),time:$('iTime').value,res:$('iRes').value.trim()});
     if(o.type==='nota') o.name=$('iNotes').value.trim().split('\n')[0];
     const i=state.items.findIndex(x=>x.id===o.id); if(i>=0) state.items[i]=o; else state.items.push(o);
     save();
@@ -843,7 +1054,7 @@ const SEED={
  c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',4],
     ['Salerno','2026-09-26',2],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
  t:[['2026-09-18','Madrid','Florencia','avion','2h 20m'],
-    ['2026-09-22','Florencia','Roma','tren','1h 30m'],
+    ['2026-09-22','Florencia','Roma','tren','1h 30m · salir temprano, hay tour a las 20:00'],
     ['2026-09-26','Roma','Salerno','tren','2h 00m'],
     ['2026-09-28','Salerno','Nápoles (aeropuerto)','bus','1h 00m'],
     ['2026-09-28','Nápoles','Palermo','avion','1h 05m'],
@@ -855,17 +1066,17 @@ const SEED={
     ['2026-09-18','Madrid tranquilo antes del vuelo','10:00','Último día en Madrid: Prado o compras por Gran Vía, almuerzo largo. Dejar las valijas en el hotel y volver a buscarlas.'],
     ['2026-09-18','Vuelo a Florencia','16:10','Vueling e Iberia vuelan directo, 2h20. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
     ['2026-09-19','Mañana libre por el centro','09:30','Baptisterio y Piazza della Signoria antes del tour. Sin horarios.'],
-    ['2026-09-19','Duomo: visita guiada, 1 hora, sin subida','11:15','Civitatis, USD 43 por persona. Va el sábado porque la catedral cierra al turismo los domingos.'],
-    ['2026-09-19','Almuerzo en el Mercato Centrale','12:45','Planta alta de puestos de comida. Sin reserva. Queda a 5 minutos del Duomo.'],
-    ['2026-09-19','Palazzo Pitti y Galería Palatina','15:30','Civitatis, 1h30. Cierra los lunes, por eso va hoy. Cruzando el Ponte Vecchio.'],
-    ['2026-09-19','Piazzale Michelangelo al atardecer','18:45','Bus 12 o 13, no caminando. Gratis. Desde acá la vista incluye la cúpula.'],
-    ['2026-09-19','Ópera en la iglesia de Santa Mónica','21:00','Civitatis, 1h05, sentados. Verificar que haya función este sábado. Cena antes en Santo Spirito.'],
-    ['2026-09-20','Uffizi y Academia: el David','09:00','Tour combinado de 7 horas. Único día posible: los lunes cierran. No agendar nada más encima.'],
-    ['2026-09-21','Palazzo Vecchio','10:00','Abre los lunes, a diferencia de los estatales. Entrada normal no necesita reserva; los Percorsi Segreti sí.'],
-    ['2026-09-21','Tarde libre, o Pisa en tren','15:00','Pisa: 1 h de regional, precio fijo, sin reserva.'],
-    ['2026-09-22','Roma: Piazza Navona, Panteón y Trastevere','17:00','Día de traslado. Solo caminar y comer.'],
-    ['2026-09-23','Coliseo, Foro y Palatino','08:30','Entradas nominativas, se liberan 30 días antes (24/08). Alternativa: tour privado con acceso.'],
-    ['2026-09-24','Vaticano y San Pedro','08:00','Reservar en museivaticani.va o tour. Hombros y rodillas cubiertos.'],
+    ['2026-09-19','Visita guiada por la catedral de Florencia','11:15','Civitatis · 4 personas, en español. Sin subida a la cúpula. Va hoy porque la catedral cierra al turismo los domingos.','A41394112'],
+    ['2026-09-19','Almuerzo en el Mercato Centrale','12:45','Sin reserva. A 5 minutos del Duomo. Hay tiempo de sobra hasta las 15.'],
+    ['2026-09-19','Visita guiada por el Palazzo Vecchio','15:00','Civitatis · 4 personas, en español.','A41395600'],
+    ['2026-09-19','Piazzale Michelangelo al atardecer','18:30','Bus 12 o 13, no caminando. Gratis. Desde acá la vista incluye la cúpula.'],
+    ['2026-09-19','Concierto de ópera en Santa Mónica','21:15','Civitatis · 4 personas, en español. 1h05, sentados. Cenar antes en Santo Spirito, al lado.','A41393964'],
+    ['2026-09-20','Florencia + Uffizi + Academia','09:45','Civitatis · 4 personas, en español. 7 horas. Único día posible: los lunes cierran. No agendar nada más encima.','A41393818'],
+    ['2026-09-21','Día libre en Florencia, o Pisa en tren','10:00','Los museos estatales cierran los lunes. Abiertos: Palazzo Vecchio, complejo del Duomo, Jardines de Boboli, Santa Croce. Pisa: 1 h de regional, precio fijo, sin reserva.'],
+    ['2026-09-22','Tour nocturno por la Roma iluminada','20:00','Civitatis · 4 personas, en español. Hay que estar en el hotel antes de las 19:30: tomar un tren temprano desde Florencia.','A41396081'],
+    ['2026-09-23','Coliseo con acceso a la Arena, Foro y Palatino','10:00','Civitatis · 4 personas, en español. La arena es el piso de los gladiadores. Llevar pasaporte: la entrada es nominativa.','A41395938'],
+    ['2026-09-24','Museos Vaticanos y Capilla Sixtina, grupo reducido','07:45','Civitatis · 4 personas, en español. Salir del hotel 07:00. Hombros y rodillas cubiertos, sin excepción.','A41395778'],
+    ['2026-09-24','San Pedro y Castel Sant Angelo','12:30','Después del tour. La basílica es gratis; la fila de seguridad puede ser larga.'],
     ['2026-09-25','Roma libre: Trevi temprano y Galleria Borghese','09:00','Borghese requiere turno.'],
     ['2026-09-26','Salerno: Duomo de San Mateo y lungomare','17:00','La ciudad del abuelo de Carge.'],
     ['2026-09-27','Amalfi y Ravello en ferry','09:00','Ferry a Amalfi 35 min. Ravello en bus desde Amalfi: Villa Rufolo.'],
@@ -879,7 +1090,7 @@ load();
 if(!state.items.length){
   SEED.c.forEach(([c,st,n])=>{ for(let k=0;k<n;k++) state.items.push({id:uid(),type:'ciudad',date:addD(st,k),city:c,lodge:'',notes:''}); });
   SEED.t.forEach(([d,f,t,m,du])=>state.items.push({id:uid(),type:'traslado',date:d,from:f,to:t,mode:m,dur:du,notes:''}));
-  SEED.a.forEach(([d,nm,tm,nt])=>state.items.push({id:uid(),type:'actividad',date:d,name:nm,time:tm,notes:nt||''}));
+  SEED.a.forEach(([d,nm,tm,nt,res])=>state.items.push({id:uid(),type:'actividad',date:d,name:nm,time:tm,notes:nt||'',res:res||''}));
   try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}
 }
 render(); heroSlides();
