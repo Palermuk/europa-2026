@@ -466,6 +466,22 @@ const FLIGHTS=[
 
 /* Fichas de las actividades reservadas, indexadas por código de reserva */
 const DETAIL={
+ AMALFI:{
+  badge:'Reservado · falta cargar el código',
+  ph:['amalfi-1','amalfi-2','amalfi-3'],
+  cap:['Positano cayendo hacia el mar','Amalfi y su puerto, entre los acantilados','La playa de Positano'],
+  lead:'Toda la Costa Amalfitana desde el mar, con acompañante en español y sin subirse a la ruta de curvas.',
+  txt:['Nos pasan a buscar por el hotel en Sorrento y vamos al puerto de Massa Lubrense, donde zarpa el barco rumbo a Amalfi. La embarcación bordea la costa: acantilados, casas de colores enclavadas en la roca y agua cristalina.',
+       'En el camino se ve la isla de Li Galli. La primera parada es el puerto de Amalfi, con tiempo libre para recorrer el pueblo y ver la catedral de San Andrés, que es el símbolo local.',
+       'Después volvemos al barco y paramos en Positano, el pueblo de las casas de colores sobre el acantilado. Es un lugar de difícil acceso por tierra, así que primero lo vemos desde el mar y después desembarcamos para recorrerlo.',
+       'Volvemos navegando al puerto de partida y de ahí en minibús al hotel.'],
+  spec:[['Duración','8 a 9 horas'],['Recogida','En el hotel de Sorrento, entre 7:15 y 9:00'],['Idioma','Acompañante en español'],['Transporte','Minibús o autobús, y barco']],
+  inc:['Recogida y regreso al hotel','Transporte en minibús o autobús y en barco','Acompañante de habla española'],
+  ojo:['Es el día más largo del bloque sur: entre 8 y 9 horas. No agendar nada más ese día.','Ver Positano desde el barco resuelve el problema de los escalones: la mejor vista es desde el agua.','Llevar gorra, protector solar y algo de abrigo liviano para el viento del mar.'],
+  tip:['Positano no tiene una calle principal: es una escalera de 500 metros de desnivel. Por eso casi todo se mueve a pie o en scooter, y por eso llegar por mar es la forma natural de entrar.',
+       'La catedral de Amalfi mezcla lo árabe, lo normando y lo bizantino, y su escalinata de 62 escalones es la postal del pueblo. Amalfi fue una república marinera que rivalizó con Venecia y Génova.',
+       'Li Galli es el archipiélago que en la Odisea Homero ubica como el hogar de las sirenas. Fue de Rudolf Nureyev, el bailarín, que murió ahí en 1993.']},
+
  f1:{
   badge:'LA714 · pasajes comprados',
   ph:['vuelo-1','vuelo-4','vuelo-2'],
@@ -681,7 +697,7 @@ function chip(it,opts={}){
       <span class="tx"><b>${esc(it.from)} → ${esc(it.to)}</b><span>${sb}</span>${notes}</span>${mv}</div>`;
   }
   if(it.type==='actividad') return `<div class="chip ${it.res?'reservado':'actividad'}" ${dg}>
-      <span class="tx"><b>${esc(it.name||'Actividad')}</b>${it.time?`<span>${it.time}</span>`:''}${it.res?`<em class="res">Reservado · ${esc(it.res)}${DETAIL[it.res]?' · ver ficha':''}</em>`:''}${notes}</span>${mv}</div>`;
+      <span class="tx"><b>${esc(it.name||'Actividad')}</b>${it.time?`<span>${it.time}</span>`:''}${it.res?`<em class="res">${(DETAIL[it.res]&&DETAIL[it.res].badge)||('Reservado · '+esc(it.res))}${DETAIL[it.res]?' · ver ficha':''}</em>`:''}${notes}</span>${mv}</div>`;
   if(it.type==='hito') return `<div class="chip hito locked"><span class="tx"><b>${esc(it.name)}</b>${it.notes?`<small>${esc(it.notes)}</small>`:''}</span></div>`;
   return `<div class="chip nota" ${dg}><span class="tx"><b>${esc(it.name||it.notes||'Nota')}</b>${it.name&&it.notes?`<small>${esc(it.notes)}</small>`:''}</span>${mv}</div>`;
 }
@@ -997,7 +1013,7 @@ const SEED={
     ['2026-09-24','Museos Vaticanos y Capilla Sixtina, grupo reducido','07:45','Civitatis · 4 personas, en español. Salir del hotel 07:00. Hombros y rodillas cubiertos, sin excepción.','A41395778'],
     ['2026-09-24','San Pedro y Castel Sant Angelo','12:30','Después del tour. La basílica es gratis; la fila de seguridad puede ser larga.'],
     ['2026-09-25','Salerno: Duomo de San Mateo, centro storico y lungomare','10:30','La ciudad del abuelo de Carge. Se llega de Roma a media mañana, con las valijas en la consigna de la estación.'],
-    ['2026-09-26','Amalfi y Positano en barco','08:00','Civitatis, 8 a 9 horas, acompañante en español. Recogida en el hotel entre 7:15 y 9:00. Se navega la costa, se desembarca en Amalfi y en Positano.'],
+    ['2026-09-26','Amalfi y Positano en barco','08:00','Civitatis, 8 a 9 horas, acompañante en español. Recogida en el hotel entre 7:15 y 9:00.','AMALFI'],
     ['2026-09-27','Capri en ferry, por su cuenta','09:00','Ferry desde Sorrento, 20 a 25 min, salidas todo el día desde 7:15. Ir temprano para ganarle a los excursionistas de Nápoles, que llegan a partir de las 10.'],
     ['2026-09-27','Capri: funicular, Piazzetta y Giardini di Augusto','10:00','El funicular sube desde Marina Grande en 3 minutos. Los Giardini di Augusto son planos, cuestan 1 o 2 euros y dan a los Faraglioni: la mejor vista con el menor esfuerzo.'],
     ['2026-09-27','Anacapri y telesilla al Monte Solaro','15:00','12 minutos sentados hasta los 589 m. La mejor vista de la isla sin caminar nada.'],
