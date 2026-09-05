@@ -167,7 +167,7 @@ function mostrarPin(k){const g=pines.querySelector(`[data-k="${k}"]`); if(!g||pu
    Si existe assets/roadtrip/musica.mp3 se usa ese archivo.
    Si no, suena una barcarola original compuesta para esta pagina. */
 let ac=null,gMaster=null,sched=null,evIdx=0,loopBase=0,pista=null,usaPista=false;
-let mudo=(()=>{try{return localStorage.getItem('sicilia-mudo')==='1';}catch(e){return false;}})();
+let mudo=(()=>{try{const v=localStorage.getItem('sicilia-mudo'); return v===null?true:v==='1';}catch(e){return true;}})();
 
 /* barcarola en 6/8, la menor: melodia cantada y arpegio suave */
 const OCT=0.34;                       /* corchea */
@@ -225,14 +225,12 @@ function pararAudio(){ clearInterval(sched); if(pista){pista.pause();} if(ac){ a
 function marcarAudio(estado){
   const b=$('mute');
   if(estado==='no'){ b.textContent='Sin audio'; b.disabled=true; return; }
-  b.textContent = mudo ? 'Con sonido' : 'Silenciar';
+  b.textContent = mudo ? '♪  Poner música' : '♪  Silenciar';
 }
 $('mute').onclick=()=>{
   mudo=!mudo;
   try{ localStorage.setItem('sicilia-mudo', mudo?'1':'0'); }catch(e){}
-  if(usaPista && pista) pista.volume=mudo?0:0.55;
-  else if(!ac) audioOn();
-  else if(gMaster) gMaster.gain.setTargetAtTime(mudo?0:0.9, ac.currentTime, 0.05);
+  if(mudo) pararAudio(); else audioOn();
   marcarAudio();
 };
 /* si dejan un archivo en assets/roadtrip/musica.mp3, se usa ese */
@@ -278,7 +276,7 @@ function reproducir(){
   pines.querySelectorAll('.pin').forEach(g=>{g.style.transition='none';g.style.opacity=0;});
   ruta.style.strokeDashoffset=L; base.style.strokeDashoffset=L; auto.style.opacity=0;
   $('tx').classList.remove('on'); $('ph').classList.remove('on'); $('progI').style.width='0%';
-  pararAudio(); audioOn();
+  pararAudio(); if(!mudo) audioOn();
   raf=requestAnimationFrame(frame);
 }
 $('start').onclick=()=>{ $('velo').classList.add('off'); reproducir(); };
