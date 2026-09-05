@@ -163,58 +163,64 @@ function mostrarPin(k){const g=pines.querySelector(`[data-k="${k}"]`); if(!g||pu
  const c=g.querySelector('circle'),r=+c.getAttribute('r');
  c.animate([{r:0},{r:r*1.75},{r:r}],{duration:620,easing:'cubic-bezier(.34,1.56,.64,1)'});}
 
-/* ---------- musica original, estilo mandolina siciliana ---------- */
-let ac=null,gMaster=null,mudo=false,sched=null,evIdx=0,loopBase=0;
-const MEL=[[69,1],[72,1],[74,1],[77,2],[74,1],[72,1],[70,1],[69,1],[67,3],
-           [65,1],[69,1],[72,1],[74,3],[72,1],[70,1],[69,1],[62,3]];
-const BAJO=[38,34,41,36,38,34,33,38];
-const BPM=76, BEAT=60/BPM, LOOPLEN=24*BEAT, MIRA=0.9;
-const hz=m=>440*Math.pow(2,(m-69)/12);
-/* eventos de un ciclo, con su desplazamiento en segundos */
-const EV=(()=>{const a=[];let t=0,beat=0;
-  MEL.forEach(([m,b])=>{ if(beat%3===0) a.push({t,m:BAJO[(beat/3)%8],d:1.7,tipo:'bajo'});
-    a.push({t,m,d:b*BEAT*0.92,tipo:'mel'}); t+=b*BEAT; beat+=b; });
-  return a;})();
+/* ---------- musica ----------
+   Si existe assets/roadtrip/musica.mp3 se usa ese archivo.
+   Si no, suena una barcarola original compuesta para esta pagina. */
+let ac=null,gMaster=null,mudo=false,sched=null,evIdx=0,loopBase=0,pista=null,usaPista=false;
 
-function pluck(t,f,dur,vol,tipo){
-  if(t<ac.currentTime) return;
-  const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain();
-  o.type=tipo||'triangle'; o2.type='triangle';
-  o.frequency.value=f; o2.frequency.value=f*1.005;
-  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+0.012);
-  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-  o.connect(g); o2.connect(g); g.connect(gMaster);
-  o.start(t); o2.start(t); o.stop(t+dur+0.02); o2.stop(t+dur+0.02);
+/* barcarola en 6/8, la menor: melodia cantada y arpegio suave */
+const OCT=0.34;                       /* corchea */
+const MEL=[[69,3],[72,3],[76,4],[74,2],[72,3],[69,3],[71,6],
+           [69,3],[67,3],[65,4],[64,2],[62,3],[64,3],[69,6]];
+const RAIZ=[45,41,45,40,45,41,43,45]; /* un acorde por compas */
+const COMPAS=6*OCT, CICLO=8*COMPAS;
+const hz=m=>440*Math.pow(2,(m-69)/12);
+const EV=(()=>{const a=[];let t=0,c=0;
+  MEL.forEach(([m,d])=>{ a.push({t,m,d:d*OCT*1.15,tipo:'mel'}); t+=d*OCT; });
+  for(let b=0;b<8;b++){ const r=RAIZ[b];
+    [[0,r],[2,r+7],[3,r+12],[5,r+7]].forEach(([o,n])=>
+      a.push({t:b*COMPAS+o*OCT, m:n, d:OCT*2.2, tipo:'arp'})); }
+  return a.sort((x,y)=>x.t-y.t);})();
+
+function nota(t,f,dur,vol,tipo){
+  if(!ac||t<ac.currentTime) return;
+  const g=ac.createGain(), o=ac.createOscillator(), o2=ac.createOscillator();
+  o.type='sine'; o2.type='triangle';
+  o.frequency.value=f; o2.frequency.value=f*1.003;
+  const g2=ac.createGain(); g2.gain.value = tipo==='mel'?0.35:0.18;
+  o2.connect(g2); g2.connect(g); o.connect(g); g.connect(gMaster);
+  const at = tipo==='mel'?0.09:0.02;
+  g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(vol,t+at);
+  g.gain.setTargetAtTime(0.0001,t+dur*0.5,dur*0.28);
+  o.start(t); o2.start(t); o.stop(t+dur+0.4); o2.stop(t+dur+0.4);
 }
-function tocar(t,e){
-  if(e.tipo==='bajo'){ pluck(t,hz(e.m),e.d,0.17,'sine'); return; }
-  const n=Math.min(12,Math.max(2,Math.round(e.d/0.145)));   /* tremolo de mandolina */
-  for(let i=0;i<n;i++) pluck(t+i*(e.d/n), hz(e.m), (e.d/n)*1.6, 0.08*(i?0.72:1));
-}
+function tocar(t,e){ nota(t,hz(e.m),e.d, e.tipo==='mel'?0.16:0.055, e.tipo); }
 function reloj(){
-  if(!ac||ac.state!=='running') return;
+  if(!ac||ac.state!=='running'||usaPista) return;
   let guarda=0;
-  while(loopBase+EV[evIdx].t < ac.currentTime+MIRA && guarda++<120){
+  while(loopBase+EV[evIdx].t < ac.currentTime+0.9 && guarda++<80){
     tocar(loopBase+EV[evIdx].t, EV[evIdx]);
-    if(++evIdx>=EV.length){ evIdx=0; loopBase+=LOOPLEN; }
+    if(++evIdx>=EV.length){ evIdx=0; loopBase+=CICLO; }
   }
 }
 function audioOn(){
   try{
     if(!ac){
       ac=new (window.AudioContext||window.webkitAudioContext)();
-      gMaster=ac.createGain(); gMaster.gain.value=mudo?0:0.85;
-      const f=ac.createBiquadFilter(); f.type='lowpass'; f.frequency.value=3400;
+      gMaster=ac.createGain(); gMaster.gain.value=mudo?0:0.9;
+      const f=ac.createBiquadFilter(); f.type='lowpass'; f.frequency.value=2600;
       gMaster.connect(f); f.connect(ac.destination);
     }
-    /* iOS y Android arrancan suspendidos: hay que reanudar dentro del gesto */
-    const arrancar=()=>{ evIdx=0; loopBase=ac.currentTime+0.12;
-      clearInterval(sched); reloj(); sched=setInterval(reloj,190); marcarAudio(); };
-    if(ac.state!=='running') ac.resume().then(arrancar).catch(arrancar);
-    else arrancar();
+    const arrancar=()=>{
+      if(usaPista && pista){ pista.currentTime=0; pista.volume=mudo?0:0.55; pista.play().catch(()=>{}); marcarAudio(); return; }
+      evIdx=0; loopBase=ac.currentTime+0.15;
+      clearInterval(sched); reloj(); sched=setInterval(reloj,190); marcarAudio();
+    };
+    if(ac.state!=='running') ac.resume().then(arrancar).catch(arrancar); else arrancar();
   }catch(e){ marcarAudio('no'); }
 }
-function pararAudio(){ clearInterval(sched); if(ac){ ac.close(); ac=null; } }
+function pararAudio(){ clearInterval(sched); if(pista){pista.pause();} if(ac){ ac.close(); ac=null; } }
 function marcarAudio(estado){
   const b=$('mute');
   if(estado==='no'){ b.textContent='Sin audio'; b.disabled=true; return; }
@@ -222,9 +228,15 @@ function marcarAudio(estado){
 }
 $('mute').onclick=()=>{
   mudo=!mudo;
-  if(!ac) audioOn(); else if(gMaster) gMaster.gain.setTargetAtTime(mudo?0:0.85, ac.currentTime, 0.05);
+  if(usaPista && pista) pista.volume=mudo?0:0.55;
+  else if(!ac) audioOn();
+  else if(gMaster) gMaster.gain.setTargetAtTime(mudo?0:0.9, ac.currentTime, 0.05);
   marcarAudio();
 };
+/* si dejan un archivo en assets/roadtrip/musica.mp3, se usa ese */
+(function(){ const a=new Audio('assets/roadtrip/musica.mp3'); a.loop=true; a.preload='auto';
+  a.addEventListener('canplaythrough',()=>{ pista=a; usaPista=true; },{once:true});
+  a.addEventListener('error',()=>{},{once:true}); })();
 
 /* ---------- linea de tiempo ---------- */
 let t0=null,raf=null,ultimo=-1;
