@@ -53,6 +53,7 @@ button.b{font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);bac
 button.b:active{background:var(--card)}
 .prog{flex:1;height:4px;background:var(--line);border-radius:3px;overflow:hidden}
 .prog i{display:block;height:100%;width:0;background:var(--v)}
+.aviso{color:var(--note);font-size:12.5px;line-height:1.5;margin-top:10px}
 footer{color:var(--note);font-size:12.5px;line-height:1.6;margin-top:20px;padding-top:14px;border-top:1px solid var(--line)}
 @media(max-width:430px){ .panel{grid-template-columns:88px 1fr;padding:11px;gap:11px}
  .panel .ph{width:88px;height:92px} .tx h3{font-size:17.5px} .tx p{font-size:13px} }
@@ -96,6 +97,8 @@ footer{color:var(--note);font-size:12.5px;line-height:1.6;margin-top:20px;paddin
   <div class="prog"><i id="progI"></i></div>
 </div>
 
+<p class="aviso" id="aviso">Si no se escucha, fijate que el teléfono no esté en silencio:
+en iPhone la llave lateral corta el audio de las páginas web.</p>
 <footer>Recorrido y distancias reales por autopista y ruta nacional. La música es original,
 compuesta para esta página. Fotos de Wikimedia Commons.</footer>
 </div>
@@ -161,44 +164,67 @@ function mostrarPin(k){const g=pines.querySelector(`[data-k="${k}"]`); if(!g||pu
  c.animate([{r:0},{r:r*1.75},{r:r}],{duration:620,easing:'cubic-bezier(.34,1.56,.64,1)'});}
 
 /* ---------- musica original, estilo mandolina siciliana ---------- */
-let ac=null,gMaster=null,timer=null,mudo=false;
+let ac=null,gMaster=null,mudo=false,sched=null,evIdx=0,loopBase=0;
 const MEL=[[69,1],[72,1],[74,1],[77,2],[74,1],[72,1],[70,1],[69,1],[67,3],
            [65,1],[69,1],[72,1],[74,3],[72,1],[70,1],[69,1],[62,3]];
 const BAJO=[38,34,41,36,38,34,33,38];
-const BPM=76, BEAT=60/BPM;
-function hz(m){return 440*Math.pow(2,(m-69)/12);}
+const BPM=76, BEAT=60/BPM, LOOPLEN=24*BEAT, MIRA=0.9;
+const hz=m=>440*Math.pow(2,(m-69)/12);
+/* eventos de un ciclo, con su desplazamiento en segundos */
+const EV=(()=>{const a=[];let t=0,beat=0;
+  MEL.forEach(([m,b])=>{ if(beat%3===0) a.push({t,m:BAJO[(beat/3)%8],d:1.7,tipo:'bajo'});
+    a.push({t,m,d:b*BEAT*0.92,tipo:'mel'}); t+=b*BEAT; beat+=b; });
+  return a;})();
+
 function pluck(t,f,dur,vol,tipo){
+  if(t<ac.currentTime) return;
   const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain();
   o.type=tipo||'triangle'; o2.type='triangle';
   o.frequency.value=f; o2.frequency.value=f*1.005;
   g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+0.012);
   g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
-  o.connect(g);o2.connect(g);g.connect(gMaster);
-  o.start(t);o2.start(t);o.stop(t+dur);o2.stop(t+dur);
+  o.connect(g); o2.connect(g); g.connect(gMaster);
+  o.start(t); o2.start(t); o.stop(t+dur+0.02); o2.stop(t+dur+0.02);
 }
-function tremolo(t,f,dur,vol){ const n=Math.max(2,Math.round(dur/0.115));
-  for(let i=0;i<n;i++) pluck(t+i*(dur/n),f,dur/n*1.5,vol*(i?0.75:1)); }
-function agendar(t0){
-  let t=t0,bar=0,bi=0;
-  for(let rep=0;rep<5;rep++){
-    let idx=0,beat=0;
-    MEL.forEach(([m,b])=>{
-      if(beat%3===0){ pluck(t,hz(BAJO[bi%8]),1.6,0.16,'sine'); bi++; }
-      tremolo(t,hz(m),b*BEAT*0.92,0.085);
-      t+=b*BEAT; beat+=b;
-    });
+function tocar(t,e){
+  if(e.tipo==='bajo'){ pluck(t,hz(e.m),e.d,0.17,'sine'); return; }
+  const n=Math.min(12,Math.max(2,Math.round(e.d/0.145)));   /* tremolo de mandolina */
+  for(let i=0;i<n;i++) pluck(t+i*(e.d/n), hz(e.m), (e.d/n)*1.6, 0.08*(i?0.72:1));
+}
+function reloj(){
+  if(!ac||ac.state!=='running') return;
+  let guarda=0;
+  while(loopBase+EV[evIdx].t < ac.currentTime+MIRA && guarda++<120){
+    tocar(loopBase+EV[evIdx].t, EV[evIdx]);
+    if(++evIdx>=EV.length){ evIdx=0; loopBase+=LOOPLEN; }
   }
 }
 function audioOn(){
-  if(ac) return;
-  ac=new (window.AudioContext||window.webkitAudioContext)();
-  gMaster=ac.createGain(); gMaster.gain.value=mudo?0:0.9;
-  const rev=ac.createBiquadFilter(); rev.type='lowpass'; rev.frequency.value=3200;
-  gMaster.connect(rev); rev.connect(ac.destination);
-  agendar(ac.currentTime+0.15);
+  try{
+    if(!ac){
+      ac=new (window.AudioContext||window.webkitAudioContext)();
+      gMaster=ac.createGain(); gMaster.gain.value=mudo?0:0.85;
+      const f=ac.createBiquadFilter(); f.type='lowpass'; f.frequency.value=3400;
+      gMaster.connect(f); f.connect(ac.destination);
+    }
+    /* iOS y Android arrancan suspendidos: hay que reanudar dentro del gesto */
+    const arrancar=()=>{ evIdx=0; loopBase=ac.currentTime+0.12;
+      clearInterval(sched); reloj(); sched=setInterval(reloj,190); marcarAudio(); };
+    if(ac.state!=='running') ac.resume().then(arrancar).catch(arrancar);
+    else arrancar();
+  }catch(e){ marcarAudio('no'); }
 }
-$('mute').onclick=()=>{mudo=!mudo; if(gMaster) gMaster.gain.value=mudo?0:0.9;
- $('mute').textContent=mudo?'Con sonido':'Silenciar';};
+function pararAudio(){ clearInterval(sched); if(ac){ ac.close(); ac=null; } }
+function marcarAudio(estado){
+  const b=$('mute');
+  if(estado==='no'){ b.textContent='Sin audio'; b.disabled=true; return; }
+  b.textContent = mudo ? 'Con sonido' : 'Silenciar';
+}
+$('mute').onclick=()=>{
+  mudo=!mudo;
+  if(!ac) audioOn(); else if(gMaster) gMaster.gain.setTargetAtTime(mudo?0:0.85, ac.currentTime, 0.05);
+  marcarAudio();
+};
 
 /* ---------- linea de tiempo ---------- */
 let t0=null,raf=null,ultimo=-1;
@@ -233,12 +259,12 @@ function pintar(i){ if(i===ultimo)return; ultimo=i; const m=marcas[i];
     ph.classList.remove('on'); void ph.offsetWidth; ph.classList.add('on'); }
 }
 function reproducir(){
-  cancelAnimationFrame(raf); if(timer)clearTimeout(timer);
+  cancelAnimationFrame(raf);
   t0=null; ultimo=-1; puestos.clear();
   pines.querySelectorAll('.pin').forEach(g=>{g.style.transition='none';g.style.opacity=0;});
   ruta.style.strokeDashoffset=L; base.style.strokeDashoffset=L; auto.style.opacity=0;
   $('tx').classList.remove('on'); $('ph').classList.remove('on'); $('progI').style.width='0%';
-  if(ac){ ac.close(); ac=null; } audioOn();
+  pararAudio(); audioOn();
   raf=requestAnimationFrame(frame);
 }
 $('start').onclick=()=>{ $('velo').classList.add('off'); reproducir(); };
