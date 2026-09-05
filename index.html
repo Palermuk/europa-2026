@@ -173,7 +173,13 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip .mv button:hover,.chip .mv button:active{color:var(--k100);background:var(--bg)}
 
 .places{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
-.places h4{font-weight:500;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--o100);margin-bottom:12px}
+.places summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;
+  font-weight:700;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--o100);padding:2px 0}
+.places summary::-webkit-details-marker{display:none}
+.places summary::after{content:'+';margin-left:auto;font-size:15px;font-weight:500;color:var(--o70);line-height:1}
+.places[open] summary::after{content:'–'}
+.places summary span{font-weight:500;color:var(--note)}
+.places[open] ul{margin-top:12px}
 .places ul{list-style:none;font-size:14.5px;line-height:1.45}
 @media (min-width:760px){ .places ul{columns:2;column-gap:40px} }
 .places li{padding:6px 0;color:var(--text);break-inside:avoid;display:flex;gap:9px}
@@ -514,7 +520,7 @@ const DETAIL={
  A41396081:{
   tip:['La Fontana di Trevi recauda alrededor de 1,4 millones de euros al año en monedas. Todo va a Cáritas de Roma.','Desde febrero de 2026 hay una tasa de 2 euros y cupo de 400 personas para bajar al borde del agua entre las 9 y las 21. De noche y con el tour, se ve desde arriba sin ese trámite.','El Panteón tiene la mayor cúpula de hormigón no armado jamás construida, del año 126, y sigue en pie. El óculo de 9 metros está abierto: cuando llueve, llueve adentro.'],
   ph:['noche-1','noche-2','noche-3'],
-  cap:['La Fontana di Trevi iluminada','La Fontana del Nettuno, en Piazza Navona','El Panteón al anochecer'],
+  cap:['La Fontana di Trevi iluminada','La Fontana del Nettuno, en Piazza Navona','Castel SantAngelo y el Tíber, de noche'],
   lead:'Las plazas y monumentos más representativos de Roma cuando la ciudad se viste de gala.',
   txt:['Nos reunimos en la Plaza de España. Arrancamos hacia la Fontana di Trevi, para verla iluminada y tirar la moneda al agua, y seguimos hasta la Galleria Sciarra.',
        'En el camino pasamos por la Piazza di Pietra y sus columnas corintias, y por la iglesia de San Ignacio de Loyola.',
@@ -526,7 +532,7 @@ const DETAIL={
  A41395938:{
   tip:['El Coliseo entraba entre 50.000 y 80.000 espectadores y podía vaciarse en unos 15 minutos por los 80 accesos llamados vomitoria. Es el modelo de todos los estadios modernos.','El hipogeo, los subterráneos que se ven desde la arena, tenía 28 montacargas accionados a mano para hacer aparecer fieras y decorados en el escenario.','El Palatino es donde la leyenda ubica la cueva en que la loba amamantó a Rómulo y Remo. De ahí viene la palabra \'palacio\'.'],
   ph:['coliseo-1','coliseo-2','coliseo-3'],
-  cap:['El interior del Coliseo y los subterráneos','Los túneles del hipogeo','El Arco de Tito, sobre la Vía Sacra'],
+  cap:['El Coliseo desde arriba: la arena y el hipogeo al descubierto','El interior, desde las gradas','El Foro Romano'],
   lead:'Los grandes vestigios de la Roma imperial, pisando el suelo de la arena donde luchaban los gladiadores.',
   txt:['Nos reunimos cerca del Colosseo y entramos al Anfiteatro Flavio por la puerta de los gladiadores, para pisar la Arena: la plataforma de madera reconstruida donde se combatía hace 2000 años. A diferencia de la visita normal, desde acá se tiene una visión de 360 grados de las cáveas y una perspectiva directa del hipogeo.',
        'Durante unos 30 minutos el guía explica la ingeniería romana y el funcionamiento de los ascensores que subían a las fieras desde los subterráneos. Es el lugar exacto de los munera y las venationes.',
@@ -550,7 +556,7 @@ const DETAIL={
  A41393818:{
   tip:['Uffizi significa literalmente \'oficinas\'. Cosme I de Médici mandó construir el edificio en 1560 para alojar las oficinas administrativas del ducado. La colección vino después.','El David mide 5,17 metros y Miguel Ángel lo talló entre 1501 y 1504, con 26 años, de un bloque de mármol que otros dos escultores habían abandonado por defectuoso.','En la Academia también están los Prigioni, cuatro esclavos inacabados que parecen estar saliendo de la piedra. Para mucha gente son más impresionantes que el David.'],
   ph:['uffizi-1','uffizi-2','uffizi-3'],
-  cap:['Una sala de la Galería Uffizi','El nacimiento de Venus, de Botticelli','El David de Miguel Ángel, en la Academia'],
+  cap:['Una de las salas de la Galería Uffizi','El nacimiento de Venus, de Botticelli','El David de Miguel Ángel, en la tribuna de la Academia'],
   lead:'Paseo por el centro, Uffizi y la Academia en una sola jornada, con acceso prioritario a los dos museos.',
   txt:['El día se divide en tres partes. Empieza por la mañana con un tour a pie por Florencia de una hora y media, similar a la visita guiada por el centro.',
        'Sigue con unas dos horas en la Galería Uffizi, que alberga una de las colecciones de pintura más importantes del mundo: Botticelli, Miguel Ángel, Leonardo.',
@@ -563,7 +569,7 @@ const DETAIL={
  A41395600:{
   tip:['Debajo del mural de Vasari en el Salone dei Cinquecento podría estar escondida La batalla de Anghiari de Leonardo, perdida hace cinco siglos. Vasari dejó escrito \'cerca trova\' (busca y encontrarás) en uno de los estandartes.','El David de Miguel Ángel estuvo en la puerta de este palacio desde 1504 hasta 1873. El que está hoy afuera es una copia; el original está en la Academia.','La torre se llama de Arnolfo y son 223 escalones, menos de la mitad que la cúpula del Duomo. Desde ahí la vista incluye la cúpula.'],
   ph:['vecchio-1','vecchio-2','vecchio-3'],
-  cap:['La torre de Arnolfo sobre la Piazza della Signoria','El Salone dei Cinquecento','El Studiolo de Francesco I'],
+  cap:['El Palazzo Vecchio sobre la Piazza della Signoria','El Salone dei Cinquecento','La copia del David, en la puerta del palacio'],
   lead:'Símbolo de la vida política de Florencia desde hace más de siete siglos.',
   txt:['La visita comienza muy cerca del Palazzo Vecchio y accedemos al palacio sin esperar colas. Recorremos sus salas y conocemos su historia, sus mitos y sus leyendas.',
        'Entre las salas más importantes está el Salone dei Cinquecento, donde Leonardo y Miguel Ángel se enfrentaron en la creación de dos enormes murales, y las habitaciones privadas de Leonor de Toledo, esposa de Cósimo I.',
@@ -705,7 +711,7 @@ function renderAgenda(){
       const lst=PLACES[k];
       if(lst && !seenPlaces.has(k)){
         seenPlaces.add(k);
-        html+=`<div class="places"><h4>Para conocer por su cuenta, sin tour</h4><ul>${lst.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+        html+=`<details class="places"><summary>Para conocer por su cuenta, sin tour <span>${lst.length}</span></summary><ul>${lst.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>`;
       }
     }
     html+=`</section>`;
