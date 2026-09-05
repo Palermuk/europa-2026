@@ -633,6 +633,8 @@ function itemsOn(date){
     if(a.type==='ciudad'||b.type==='ciudad') return (ORD[a.type]??9)-(ORD[b.type]??9);
     const t=a.time||a.dep||'', u=b.time||b.dep||'';
     if(t&&u) return t.localeCompare(u);
+    if(t&&!u) return -1;            /* con hora antes que sin hora */
+    if(!t&&u) return 1;
     return (ORD[a.type]??9)-(ORD[b.type]??9);
   });
 }
@@ -649,7 +651,7 @@ function blocks(){
 }
 
 /* ==================== RENDER ==================== */
-function render(){ renderCounter(); renderAlerts(); renderAgenda(); renderCal(); renderSummary(); renderMap(); refreshCityList(); }
+function render(){ renderCounter(); renderAlerts(); renderAgenda(); renderCal(); renderSummary(); renderMap(); }
 
 function renderCounter(){
   let assigned=0,d=TRIP_START;
@@ -841,10 +843,6 @@ function renderSummary(){
   document.getElementById('sumMoves').innerHTML=mv.length?mv.map(m=>
     `<div class="row"><span class="k"><span class="mode">${MODEN[m.mode]||''}</span><b>${esc(m.from)}</b> → <b>${esc(m.to)}</b></span><span class="v">${fmt(m.date)}${m.dur?' · '+esc(m.dur):''}</span></div>`).join(''):'<p class="empty">Sin traslados.</p>';
 }
-function refreshCityList(){
-  const dl=document.getElementById('cityList');
-  dl.innerHTML=Object.values(GEO).map(g=>`<option value="${g.n}">`).join('');
-}
 
 
 /* Lugares turísticos principales, por ciudad */
@@ -971,10 +969,10 @@ window.addEventListener('resize',()=>{ if(map) renderMap(); });
 
 /* ==================== PORTADA: slideshow de ciudades del viaje ==================== */
 function heroSlides(){
-  const hero=$('hero'), dots=$('heroDots');
-  const tag=$('heroTag');
+  const hero=document.getElementById('hero'), dots=document.getElementById('heroDots');
+  const tag=document.getElementById('heroTag');
   /* Portada: las ciudades del viaje, en orden */
-  const HERO=[['roma',1],['palermo',1,'Sicilia'],['madrid',1],['toledo',1],['segovia',1],['napoles',1],['milan',1],['florencia',1]];
+  const HERO=[['roma',1],['sicilia',1],['madrid',1],['toledo',1],['florencia',1],['sorrento',1],['segovia',1]];
   const imgs=HERO.map(([k,i,alias])=>{ const g=GEO[k]; return {src:`assets/ciudades/${k}-${i}.jpg`,name:alias||g.n,country:g.c}; });
   hero.querySelectorAll('.slide').forEach(x=>x.remove()); dots.innerHTML='';
   const txt=hero.querySelector('.txt'); const sl=[], ds=[];
@@ -991,14 +989,14 @@ const SEED={
  c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',3],
     ['Sorrento','2026-09-25',3],['Sicilia','2026-09-28',4],['Madrid','2026-10-02',1]],
  t:[['2026-09-18','Madrid','Florencia','avion','2h 20m','16:10','Vueling e Iberia vuelan directo. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
-    ['2026-09-22','Florencia','Roma','tren','1h 30m','','Salir de Florencia entre las 15:00 y las 16:30: el tour nocturno arranca 20:00 y hay que pasar por el hotel.'],
+    ['2026-09-22','Florencia','Roma','tren','1h 30m','15:30','Salir de Florencia entre las 15:00 y las 16:30: el tour nocturno arranca 20:00 y hay que pasar por el hotel.'],
     ['2026-09-25','Roma','Salerno','tren','2h 00m','08:30','Frecciarossa directo. Dejar las valijas en la consigna de la estación de Salerno, unos 6 euros por bulto.'],
     ['2026-09-25','Salerno','Sorrento','auto','1h 20m','17:00','Traslado privado por autopista, evitando la ruta de curvas. En tren serían unas 2h15 con transbordo en Nápoles.'],
-    ['2026-09-28','Sorrento','Nápoles (aeropuerto)','bus','1h 20m','','Bus Curreri directo, 10 euros, 8 salidas por día. Verificar el horario en curreriviaggi.it 24 h antes.'],
-    ['2026-09-28','Nápoles','Catania','avion','1h 05m','','Se entra por Catania y se sale por Palermo: cruzando la isla no se repite ni un kilómetro. Retirar el auto en el aeropuerto.'],
+    ['2026-09-28','Sorrento','Nápoles (aeropuerto)','bus','1h 20m','11:00','Bus Curreri directo, 10 euros, 8 salidas por día. Verificar el horario en curreriviaggi.it 24 h antes y ajustar según la hora del vuelo.'],
+    ['2026-09-28','Nápoles','Catania','avion','1h 05m','14:00','Hora tentativa, falta comprar. Se entra por Catania y se sale por Palermo: cruzando la isla no se repite ni un kilómetro. Retirar el auto en el aeropuerto.'],
     ['2026-09-30','Taormina','Valguarnera','auto','1h 30m','09:00','Unos 120 km por la A19. Llegar a la mañana: el Comune atiende de 9 a 13.'],
     ['2026-10-01','Valguarnera','Palermo','auto','2h 30m','10:00','Dos caminos posibles: por Gangi y Cefalù (montaña y costa) o por Agrigento (el Valle de los Templos).'],
-    ['2026-10-02','Palermo','Madrid','avion','2h 30m','','El 2 de octubre es viernes: Palermo-Madrid vuela los viernes, Catania no. Tomar el de la mañana, es la única noche de margen antes del vuelo a Santiago.']],
+    ['2026-10-02','Palermo','Madrid','avion','2h 30m','11:00','Hora tentativa, falta comprar. El 2 de octubre es viernes: Palermo-Madrid vuela los viernes, Catania no. Tomar el de la mañana, es la única noche de margen antes del vuelo a Santiago.']],
  a:[['2026-09-14','Paseo suave y cena temprana','18:00','Llegada 14:05 más frontera EES. Jet lag: nada exigente.'],
     ['2026-09-15','Madrid relajado: walking tour, San Miguel, Retiro y Debod','10:00','Todo sin reserva de hora. Tapeo en Cava Baja a las 21.'],
     ['2026-09-16','Toledo, ida y vuelta en el día','08:30','Tren desde Atocha, 33 min. Escaleras mecánicas de Safont para la cuesta.'],
