@@ -155,6 +155,7 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip.traslado{background:var(--v10);border-color:var(--v40)}
 .chip.traslado .tx span{color:var(--v100)}
 .chip.vuelo{background:var(--k10);border-color:var(--k70)}
+.chip.vuelo[data-item]{cursor:pointer}
 .chip.vuelo .tx span{color:var(--k70)}
 .chip.actividad{background:var(--s10);border-color:var(--s40)}
 .chip.reservado{background:var(--s20);border-color:var(--s100);cursor:pointer}
@@ -453,6 +454,37 @@ const FLIGHTS=[
 
 /* Fichas de las actividades reservadas, indexadas por código de reserva */
 const DETAIL={
+ f1:{
+  badge:'LA714 · pasajes comprados',
+  ph:['vuelo-1','vuelo-4','vuelo-2'],
+  cap:['El Boeing 787-9 de LATAM','El aeropuerto de Santiago desde el aire','Un 787-9 en Santiago'],
+  lead:'Primer tramo hacia Europa: Santiago a São Paulo, 4 horas.',
+  txt:['Salimos de Santiago a las 16:45 y llegamos a Guarulhos a las 20:45 del mismo domingo. Son los cuatro juntos: José y Mary llegaron el sábado desde Buenos Aires.',
+       'El vuelo sigue con el mismo número, LA714, hacia Madrid. Al ser un solo billete, normalmente no hay que retirar el equipaje en São Paulo: se despacha en Santiago y aparece en Madrid. Conviene confirmarlo igual en el mostrador al hacer el check-in.'],
+  spec:[['Vuelo','LA714'],['Equipo','Boeing 787-9'],['Sale','Domingo 13, 16:45 · Santiago (SCL)'],['Llega','Domingo 13, 20:45 · São Paulo (GRU)'],['Duración','4h 00m'],['Escala','2h 15m en Guarulhos']],
+  ojo:['La escala son 2h15 y Guarulhos es grande y lento. Si el tramo desde Santiago se demora más de una hora, la conexión se complica; al ser un mismo billete, LATAM tiene que reubicarnos.','Check-in online 48 horas antes.','Cargar los números de LATAM Pass de los cuatro antes de volar.'],
+  tip:['El 787-9 vuela con más presión de cabina y más humedad que un avión convencional: se llega bastante menos deshidratado y con menos jet lag.','Las ventanillas no tienen cortina: se oscurecen con un botón. La tripulación puede atenuarlas todas desde su panel.']},
+ f2:{
+  badge:'LA714 · pasajes comprados',
+  ph:['vuelo-1','vuelo-3','vuelo-2'],
+  cap:['El Boeing 787-9 de LATAM','La Terminal 4 de Barajas','Un 787-9 en pista'],
+  lead:'El tramo largo: São Paulo a Madrid, algo más de diez horas, de noche.',
+  txt:['Despegamos de Guarulhos a las 23:00 del domingo 13 y aterrizamos en Madrid-Barajas a las 14:05 del lunes 14. Son 10 horas y 5 minutos, con cinco horas de diferencia horaria en contra.',
+       'Al aterrizar hay que pasar el control de frontera del Schengen con registro biométrico EES: foto, cuatro huellas y escaneo del pasaporte. Es la primera vez para los cuatro, así que toma más tiempo que en viajes futuros.'],
+  spec:[['Vuelo','LA714'],['Equipo','Boeing 787-9'],['Sale','Domingo 13, 23:00 · São Paulo (GRU)'],['Llega','Lunes 14, 14:05 · Madrid (MAD)'],['Duración','10h 05m']],
+  ojo:['Sumar entre 30 y 75 minutos de frontera EES. Calcular salir del aeropuerto entre las 15:30 y las 16:30, no antes.','El lunes 14 no hay que planificar nada exigente: llegada, hotel, ducha y cena temprana.','Medicación y power bank en el equipaje de mano, nunca en la bodega.'],
+  tip:['Barajas es el aeropuerto más grande de España y el cuarto de Europa. La Terminal 4, de Richard Rogers y Antonio Lamela, ganó el premio Stirling en 2006: es la del techo ondulado de bambú y las columnas de colores.','Volando hacia el este se pierde la noche: son 10 horas de vuelo pero el reloj avanza 15. Conviene dormir apenas despega.']},
+ f4:{
+  badge:'LA707 · pasajes comprados',
+  ph:['vuelo-3','vuelo-1','vuelo-4'],
+  cap:['La Terminal 4 de Barajas','El Boeing 787-9 de LATAM','Llegada a Santiago'],
+  lead:'La vuelta: Madrid a Santiago directo, sin escalas, 13 horas y media.',
+  txt:['Salimos de Barajas a las 13:15 del sábado 3 de octubre y llegamos a Santiago a las 21:45 del mismo día. Es un vuelo directo, mucho más cómodo que la ida.',
+       'Carge y Matías se quedan en Santiago. José y Mary siguen a Buenos Aires el domingo 4.'],
+  spec:[['Vuelo','LA707'],['Equipo','Boeing 787-9'],['Sale','Sábado 3, 13:15 · Madrid (MAD)'],['Llega','Sábado 3, 21:45 · Santiago (SCL)'],['Duración','13h 30m'],['Escalas','Ninguna']],
+  ojo:['Estar en Barajas a las 10:15, tres horas antes. El control de salida también registra biometría EES y suma tiempo.','LATAM sale habitualmente de T4 o T4S. El traslado entre las dos es en tren interno y son 15 minutos más: confirmar la terminal 24 horas antes.','La noche del 2 al 3 hay que dormir en Madrid. Salir del alojamiento cerca de las 09:00.'],
+  tip:['Volviendo hacia el oeste el día se estira: son 13h30 de vuelo pero el reloj solo avanza 8h30. Se llega el mismo sábado a la noche.','Antes de despachar la valija, si hicieron compras grandes, se puede pedir la devolución del IVA en los quioscos DIVA de Barajas.']},
+
  A41394112:{
   tip:['La cúpula de Brunelleschi sigue siendo la mayor cúpula de mampostería del mundo: más de 4 millones de ladrillos, levantada entre 1420 y 1436 sin cimbra de madera. Nadie sabía si se iba a sostener.','El fresco del Juicio Final que corona la cúpula ocupa unos 3.600 m2. Vasari lo empezó en 1572 y Zuccaro lo terminó tras su muerte.','La fachada de mármol blanco, verde y rosa que se ve hoy es del siglo XIX. La original quedó inacabada y fue demolida en 1587.'],
   ph:['duomo-1','duomo-2','duomo-3'],
@@ -628,10 +660,10 @@ function renderAlerts(){
 function chip(it,opts={}){
   const mv = it.locked?'':`<span class="mv">
       </span>`;
-  const dg = (it.type==='actividad'&&it.res&&DETAIL[it.res])?`data-item="${it.id}" data-iid="${it.id}"`:'';
+  const dg = DETAIL[it.res||it.id]?`data-item="${it.id}" data-iid="${it.id}"`:'';
   const notes = opts.notes && it.notes ? `<small>${esc(it.notes)}</small>` : '';
   if(it.type==='traslado'){
-    const sb=[MODEN[it.mode]||'',it.dep||'',it.dur?'· '+esc(it.dur):''].filter(Boolean).join(' ');
+    const sb=[MODEN[it.mode]||'',it.dep||'',it.dur?'· '+esc(it.dur):'',DETAIL[it.id]?'· ver ficha':''].filter(Boolean).join(' ');
     return `<div class="chip ${it.mode==='avion'?'vuelo':'traslado'} ${it.locked?'locked':''}" ${dg}>
       <span class="tx"><b>${esc(it.from)} → ${esc(it.to)}</b><span>${sb}</span>${notes}</span>${mv}</div>`;
   }
@@ -718,7 +750,7 @@ function gotoDay(date){
 }
 /* ---- ficha de actividad ---- */
 function openSheet(it){
-  const d=DETAIL[it.res]; if(!d) return false;
+  const d=DETAIL[it.res||it.id]; if(!d) return false;
   const gal=d.ph.map((f,i)=>`<figure><img src="assets/actividades/${f}.jpg" alt="" loading="lazy">${d.cap&&d.cap[i]?`<figcaption>${esc(d.cap[i])}</figcaption>`:''}</figure>`).join('');
   const dots=d.ph.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('');
   const spec=(d.spec||[]).map(([k,v])=>`<div><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join('');
@@ -727,9 +759,9 @@ function openSheet(it){
     <div class="sh-gal" id="shGal">${gal}</div>
     ${d.ph.length>1?`<div class="sh-dots" id="shDots">${dots}</div>`:''}
     <div class="sh-in">
-      <h3>${esc(it.name)}</h3>
-      <div class="sh-when">${wd(it.date)} ${s2d(it.date).getUTCDate()} de ${MESES[s2d(it.date).getUTCMonth()]}${it.time?' · '+it.time+' h':''}</div>
-      <div class="sh-code">Reservado · ${esc(it.res)}</div>
+      <h3>${esc(it.name || (it.from+' → '+it.to))}</h3>
+      <div class="sh-when">${wd(it.date)} ${s2d(it.date).getUTCDate()} de ${MESES[s2d(it.date).getUTCMonth()]}${(it.time||it.dep)?' · '+(it.time||it.dep)+' h':''}</div>
+      <div class="sh-code">${esc(d.badge || ('Reservado · '+it.res))}</div>
       <p class="sh-lead">${esc(d.lead)}</p>
       ${(d.txt||[]).map(t=>`<p class="b">${esc(t)}</p>`).join('')}
       ${spec?`<div class="sh-h">Detalles</div><div class="sh-spec">${spec}</div>`:''}
@@ -756,8 +788,8 @@ function bind(root){
 
   root.querySelectorAll('[data-item]').forEach(b=>b.onclick=e=>{
     e.stopPropagation();
-    const it=state.items.find(x=>x.id===b.dataset.item);
-    if(it&&it.res) openSheet(it);
+    const it=[...state.items,...FLIGHTS].find(x=>x.id===b.dataset.item);
+    if(it) openSheet(it);
   });
 }
 function moveItem(id,nd){
