@@ -173,17 +173,21 @@ h2.sec{font-weight:700;font-size:22px;letter-spacing:-.025em;color:var(--title);
 .chip .mv button:hover,.chip .mv button:active{color:var(--k100);background:var(--bg)}
 
 .places{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
-.places summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;
-  font-weight:700;font-size:12.5px;font-variant-caps:all-small-caps;letter-spacing:.04em;color:var(--o100);padding:2px 0}
+.places summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+  background:var(--o10);border:1px solid var(--o40);border-radius:2px;padding:15px 16px;min-height:54px;
+  font-weight:700;font-size:16.5px;letter-spacing:-.015em;color:var(--title);
+  -webkit-tap-highlight-color:transparent}
 .places summary::-webkit-details-marker{display:none}
-.places summary::after{content:'+';margin-left:auto;font-size:15px;font-weight:500;color:var(--o70);line-height:1}
-.places[open] summary::after{content:'–'}
-.places summary span{font-weight:500;color:var(--note)}
-.places[open] ul{margin-top:12px}
-.places ul{list-style:none;font-size:14.5px;line-height:1.45}
+.places summary:active{background:var(--o20)}
+.places summary .n{margin-left:auto;font-weight:500;font-size:14px;color:var(--o100);white-space:nowrap;letter-spacing:0}
+.places summary svg{width:20px;height:20px;flex:0 0 auto;stroke:var(--o100);stroke-width:2.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.places[open] summary svg{transform:rotate(180deg)}
+.places[open] ul{margin-top:16px}
+.places ul{list-style:none;font-size:16px;line-height:1.5}
 @media (min-width:760px){ .places ul{columns:2;column-gap:40px} }
-.places li{padding:6px 0;color:var(--text);break-inside:avoid;display:flex;gap:9px}
-.places li::before{content:'';flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--o40);margin-top:8px}
+.places li{padding:9px 0;color:var(--text);break-inside:avoid;display:flex;gap:11px}
+.places li::before{content:'';flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:var(--o100);margin-top:10px}
 
 /* ---------- FICHA DE ACTIVIDAD ---------- */
 #sheet{max-width:720px;width:100%;max-height:92vh;padding:0;border:1px solid var(--line);border-radius:2px;background:var(--surface);overflow:hidden}
@@ -711,7 +715,7 @@ function renderAgenda(){
       const lst=PLACES[k];
       if(lst && !seenPlaces.has(k)){
         seenPlaces.add(k);
-        html+=`<details class="places"><summary>Para conocer por su cuenta, sin tour <span>${lst.length}</span></summary><ul>${lst.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>`;
+        html+=`<details class="places"><summary><span class="t">Para hacer por su cuenta</span><span class="n">${lst.length} lugares</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><ul>${lst.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>`;
       }
     }
     html+=`</section>`;
