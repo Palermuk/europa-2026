@@ -391,7 +391,7 @@ textarea{resize:vertical;min-height:66px}
 
 <script>
 /* ==================== CONSTANTES ==================== */
-const KEY='europa2026-v5';
+const KEY='europa2026-v6';
 const GRID_START='2026-09-07', GRID_END='2026-10-04';
 const TRIP_START='2026-09-14', TRIP_END='2026-10-02';
 const ACTIVE_START='2026-09-12', ACTIVE_END='2026-10-04';
@@ -515,7 +515,9 @@ function renderAlerts(){
   d=addD(TRIP_START,1);
   while(d<=ACTIVE_END){
     const hoy=cityOn(d), ayer=cityOn(addD(d,-1));
-    if(hoy&&ayer&&hoy.city!==ayer.city && !state.items.some(x=>x.type==='traslado'&&x.date===d))
+    /* el traslado puede ir el mismo día o la víspera (vuelo o tren de noche) */
+    const ayerD=addD(d,-1);
+    if(hoy&&ayer&&hoy.city!==ayer.city && !state.items.some(x=>x.type==='traslado'&&(x.date===d||x.date===ayerD)))
       A.push(['',`<b>Falta el traslado del ${fmt(d)}:</b> ${esc(ayer.city)} → ${esc(hoy.city)}.`]);
     d=addD(d,1);
   }
@@ -838,10 +840,9 @@ function heroSlides(){
 /* ==================== INICIO ==================== */
 /* Plan cargado 22/08/2026: Madrid 4 · Milán 1 · Florencia 3 · Roma 4 · Salerno 2 · Sicilia 4 · Madrid 1 */
 const SEED={
- c:[['Madrid','2026-09-14',4],['Milán','2026-09-18',1],['Florencia','2026-09-19',3],['Roma','2026-09-22',4],
+ c:[['Madrid','2026-09-14',5],['Florencia','2026-09-19',3],['Roma','2026-09-22',4],
     ['Salerno','2026-09-26',2],['Palermo','2026-09-28',4],['Madrid','2026-10-02',1]],
- t:[['2026-09-18','Madrid','Milán','avion','1h 55m'],
-    ['2026-09-19','Milán','Florencia','tren','1h 50m'],
+ t:[['2026-09-18','Madrid','Florencia','avion','2h 20m'],
     ['2026-09-22','Florencia','Roma','tren','1h 30m'],
     ['2026-09-26','Roma','Salerno','tren','2h 00m'],
     ['2026-09-28','Salerno','Nápoles (aeropuerto)','bus','1h 00m'],
@@ -851,8 +852,9 @@ const SEED={
     ['2026-09-15','Madrid relajado: walking tour, San Miguel, Retiro y Debod','10:00','Todo sin reserva de hora. Tapeo en Cava Baja a las 21.'],
     ['2026-09-16','Toledo, ida y vuelta en el día','08:30','Tren desde Atocha, 33 min. Escaleras mecánicas de Safont para la cuesta.'],
     ['2026-09-17','Segovia, ida y vuelta en el día','09:00','AVE desde Chamartín, 27 min. Acueducto, Alcázar y cochinillo (reservar mesa).'],
-    ['2026-09-18','Duomo de Milán y terrazas, Galleria y aperitivo en Navigli','15:00','Subir a las terrazas con ascensor.'],
-    ['2026-09-19','Florencia: Ponte Vecchio y Piazzale Michelangelo','16:00','Al Piazzale en bus 12 o 13, no caminando.'],
+    ['2026-09-18','Madrid tranquilo antes del vuelo','10:00','Último día en Madrid: Prado o compras por Gran Vía, almuerzo largo. Dejar las valijas en el hotel y volver a buscarlas.'],
+    ['2026-09-18','Vuelo a Florencia','16:10','Vueling e Iberia vuelan directo, 2h20. El de las 16:10 llega cerca de las 18:30; el último sale 20:45 y llega 23:05, tarde para papá y mamá.'],
+    ['2026-09-19','Florencia: Duomo, centro y Ponte Vecchio','10:00','Primer día completo. Al Piazzale Michelangelo al atardecer, en bus 12 o 13, no caminando.'],
     ['2026-09-20','Uffizi y el David','09:00','Abren domingo; los lunes cierran, por eso hoy. Reservar o tour con acceso.'],
     ['2026-09-21','Florencia: Duomo y Oltrarno, o Pisa','10:00','Pisa: 1 h de tren regional, sin reserva.'],
     ['2026-09-22','Roma: Piazza Navona, Panteón y Trastevere','17:00','Día de traslado. Solo caminar y comer.'],
